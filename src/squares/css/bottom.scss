@@ -1,0 +1,12 @@
+@use './partials';
+.vert {
+    transform: skewX(-45deg);
+}
+
+.vert-2 {
+    transform: skewY(-45deg);
+}
+
+.vert-3 {
+    transform: skewX(45deg);
+}

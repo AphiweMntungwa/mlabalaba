@@ -1,4 +1,4 @@
-@use './partials';
+@use "./partials";
 .app {
     color: blue;
     @include partials.flex(column, center, center);
@@ -14,5 +14,12 @@
                 @include partials.setFrame(100px, 100px);
             }
         }
+    }
+}
+
+svg {
+    .H1 {
+        width: 500px;
+        height: 50px;
     }
 }
