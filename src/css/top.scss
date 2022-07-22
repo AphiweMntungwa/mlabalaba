@@ -1,0 +1,13 @@
+@use "./partials";
+.app {
+    .top {
+        padding-inline: 20%;
+        @include partials.setFrame(65%, initial);
+        div {
+            @include partials.setFrame(200px, 200px);
+            div {
+                @include partials.setFrame(100px, 100px);
+            }
+        }
+    }
+}

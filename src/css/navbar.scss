@@ -1,0 +1,11 @@
+@use './partials';
+nav {
+    @include partials.flex(column, space-evenly, center);
+    @include partials.setFrame(35%, 90vh);
+    background-color: rgb(24, 78, 150, .1);
+    border-right: 1px solid rgb(0, 0, 0, .5);
+    div {
+        flex-grow: 1;
+        @include partials.flex(column, center, center);
+    }
+}
