@@ -1,0 +1,11 @@
+@mixin flex($position, $j-c, $a-i) {
+    display: flex;
+    flex-direction: $position;
+    justify-content: $j-c;
+    align-items: $a-i;
+}
+
+@mixin setFrame($width, $height) {
+    width: $width;
+    height: $height;
+}
