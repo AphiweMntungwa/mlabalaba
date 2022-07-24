@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Position from "../Utils/positions/Positions";
 import Middle from "./Middle";
 import "../css/top.scss";
 
@@ -12,6 +14,7 @@ export function spitPathBounds(m, val, v, h) {
   }
 }
 
+
 export function makeNum(numCount) {
   let arr = [];
   for (let i = 10; i <= numCount; i += 10) {
@@ -22,13 +25,19 @@ export function makeNum(numCount) {
 
 function Top() {
   const [arr, pushArr] = useState([]);
+  const [press, switcher] = useState(false);
+  const burger = useSelector((state) => state.menu.menu.payload);
+
+  useEffect(() => {
+    burger ? switcher("top-nav-on") : switcher("top-nav-off");
+  }, [burger]);
 
   useEffect(() => {
     pushArr(makeNum(140));
   }, []);
 
   return (
-    <div className="top">
+    <div className={`${press} top`}>
       <svg viewBox="0 0 140 140" style={{ border: "1px solid green" }}>
         {arr.map((el, i) => (
           <>
@@ -46,7 +55,7 @@ function Top() {
             />
           </>
         ))}
-        <Middle  />
+        <Middle />
       </svg>
     </div>
   );

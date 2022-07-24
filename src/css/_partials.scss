@@ -1,11 +1,30 @@
-@mixin flex($position, $j-c, $a-i) {
+$nav-color: rgb(24, 78, 150, .1);
+$primary-color: rgb(152, 10, 200);
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@1,700&display=swap');
+$background-color: rgb(255,
+255,
+255);
+$primary-font-family: 'Chakra Petch',
+sans-serif;
+@mixin flex($position,
+$j-c,
+$a-i) {
     display: flex;
     flex-direction: $position;
     justify-content: $j-c;
     align-items: $a-i;
 }
 
-@mixin setFrame($width, $height) {
+@mixin setFrame($width,
+$height) {
     width: $width;
     height: $height;
+}
+
+@mixin position($position,
+$top,
+$left) {
+    position: $position;
+    top: $top;
+    left: $left;
 }

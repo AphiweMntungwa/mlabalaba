@@ -1,0 +1,54 @@
+@use "./partials";
+.header {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    border-bottom: 1px solid goldenrod;
+    @include partials.setFrame(100%, initial);
+    box-shadow: 0px 0px 0.1px black;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    margin-bottom: 0;
+    @include partials.flex(row, space-between, center);
+    .menu-icon {
+        width: 50px;
+        height: 50px;
+    }
+    h1 {
+        margin: 0;
+    }
+}
+
+.onSwitch {
+    path {
+        stroke-width: 5;
+    }
+    .cross-hairs {
+        visibility: visible;
+        animation: show 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+    }
+}
+
+.offSwitch {
+    .cross-hairs {
+        visibility: hidden;
+        animation: hide 0.5 cubic-bezier(0.895, 0.03, 0.685, 0.22);
+    }
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes hide {
+    from {
+        visibility: hidden;
+    }
+    to {
+        visibility: visible;
+    }
+}

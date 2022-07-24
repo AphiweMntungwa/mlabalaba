@@ -3,31 +3,9 @@
     min-height: 100vh;
     color: blue;
     @include partials.flex(column, flex-start, center);
-    h1 {
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        border-bottom: 1px solid goldenrod;
-        @include partials.setFrame(100%, initial);
-        box-shadow: 0px 0px .1px black;
-        position: sticky;
-        top: 0;
-        background-color: white;
-        margin-bottom: 0;
-    }
     .carrier {
         flex-grow: 1;
         @include partials.flex(row, space-between, flex-start);
         @include partials.setFrame(100%, 100%);
-    }
-}
-
-circle {
-    r: 2;
-    &:nth-of-type(2) {
-        cy: 30;
-        cx: 30;
-    }
-    &:nth-of-type(3) {
-        cy: 50;
-        cx: 50;
     }
 }

@@ -1,17 +1,22 @@
 import React from "react";
+import { Provider } from "react-redux";
+import { store } from "./Redux/store";
 import Top from "./squares/Top";
 import Navbar from "./Navbar";
-import './css/app.scss'
+import Header from "./Header";
+import "./css/app.scss";
 
 function App() {
   return (
-    <div className="app">
-      <h1>Mlabalaba</h1>
-      <div className="carrier">
-        <Navbar />
-        <Top />
+    <Provider store={store}>
+      <div className="app">
+        <Header />
+        <div className="carrier">
+          <Navbar />
+          <Top />
+        </div>
       </div>
-    </div>
+    </Provider>
   );
 }
 
