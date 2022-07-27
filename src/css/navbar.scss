@@ -3,7 +3,7 @@ nav {
     @include partials.flex(column, space-evenly, flex-start);
     display: none;
     @include partials.setFrame(100%, 55vh);
-    background-color: white;
+    // background-color: white;
     div {
         flex-grow: 1;
         @include partials.flex(column, center, center);

@@ -1,17 +1,31 @@
-@use "./partials";
-.app {
-    .top {
-        padding-inline: 20%;
-        padding-top: 3vh;
-        @include partials.setFrame(100%, 50vh);
-        div {
-            @include partials.setFrame(200px, 200px);
+    @use "./partials";
+    .app {
+        .top {
+            padding-inline: 10%;
+            padding-top: 2vh;
+            flex-grow: 1;
+            @include partials.flex(row, center, center);
+            flex-wrap: wrap;
             div {
-                @include partials.setFrame(100px, 100px);
+                @include partials.setFrame(200px, 200px);
+                div {
+                    @include partials.setFrame(100px, 100px);
+                }
+            }
+        }
+        .top-nav-on {
+            display: none;
+        }
+        .board {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    
+    @media (max-height: 668px) {
+        .app {
+            .board {
+                width: 50%;
             }
         }
     }
-    .top-nav-on {
-        display: none;
-    }
-}

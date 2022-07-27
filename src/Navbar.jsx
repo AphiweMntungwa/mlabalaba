@@ -4,7 +4,7 @@ import "boxicons";
 import "./css/navbar.scss";
 
 function Navbar() {
-  const [press, switcher] = useState(false);
+  const [press, switcher] = useState('');
   const burger = useSelector((state) => state.menu.menu.payload);
 
   useEffect(() => {

@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Position from "../Utils/positions/Positions";
 import Middle from "./Middle";
 import "../css/top.scss";
+import Cow from "../Utils/circles/Cows";
+
+const a = new Cow(20, 30, 3, "blue", "black", true);
+console.log(a);
 
 export function spitPathBounds(m, val, v, h) {
   if (h) {
@@ -13,7 +17,6 @@ export function spitPathBounds(m, val, v, h) {
     return null;
   }
 }
-
 
 export function makeNum(numCount) {
   let arr = [];
@@ -38,9 +41,9 @@ function Top() {
 
   return (
     <div className={`${press} top`}>
-      <svg viewBox="0 0 140 140" style={{ border: "1px solid green" }}>
+      <svg viewBox="0 0 140 140" className="board">
         {arr.map((el, i) => (
-          <>
+          <Fragment key={i}>
             <path
               stroke="black"
               strokeWidth=".1"
@@ -53,7 +56,7 @@ function Top() {
               d={spitPathBounds(0, el, true, 140)}
               className={`H${i}`}
             />
-          </>
+          </Fragment>
         ))}
         <Middle />
       </svg>

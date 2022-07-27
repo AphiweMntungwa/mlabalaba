@@ -4,8 +4,13 @@
     color: blue;
     @include partials.flex(column, flex-start, center);
     .carrier {
-        flex-grow: 1;
         @include partials.flex(row, space-between, flex-start);
-        @include partials.setFrame(100%, 100%);
+        @include partials.setFrame(100%, fit-content);
+    }
+    .cow-carriers {
+        @include partials.flex(row, space-evenly, center);
+        div {
+            margin: 1.5%;
+        }
     }
 }

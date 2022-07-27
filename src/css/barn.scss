@@ -1,0 +1,17 @@
+.cows {
+    display: flex;
+    flex-wrap: wrap;
+    div {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-image: url('../Assets/cow/cow.png');
+        background-size: cover;
+    }
+}
+
+.active {
+    border: 2px solid blue;
+    box-sizing: border-box;
+    box-shadow: 1px 0px 1px blue;
+}
