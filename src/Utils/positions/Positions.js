@@ -36,4 +36,5 @@ export const positionObjects = {
     g6: new Position(130, 130, { f5: 'f5', d6: 'd6', g3: 'g3' })
 }
 
+
 export default Position;

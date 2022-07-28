@@ -9,8 +9,12 @@
     }
     .cow-carriers {
         @include partials.flex(row, space-evenly, center);
+        min-width: 85px;
         div {
             margin: 1.5%;
+        }
+        .carrier-group {
+            min-width: 90px;
         }
     }
 }

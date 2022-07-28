@@ -4,10 +4,16 @@ import { activateCows } from "../Redux/activeCow";
 import { useSelector, useDispatch } from "react-redux";
 
 function Barn({ cowState }) {
-  const [activeCow, setActiveCow] = useState(false);
-  const dispatch = useDispatch()
+  const activePlayer = useSelector((state) => state.activePlayer.activePlayer);
+  const shots = useSelector(state => state.guns)
+  const dispatch = useDispatch();
+  console.log(shots)
 
   function activateCow(e, el) {
+    console.log(cowState[el].redOrBlack, activePlayer)
+    if (cowState[el].redOrBlack != activePlayer) {
+      return null;
+    }
     const actives = document.querySelectorAll(".active");
     actives.forEach((el) => {
       el.classList.contains("active") && el.classList.remove("active");

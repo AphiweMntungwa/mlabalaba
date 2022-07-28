@@ -1,10 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import menu from "./menu";
 import activeCow from "./activeCow";
+import activePlayer from "./activePlayer";
+import playingCows from "./playingCows";
+import guns from "./guns";
 
 export const store = configureStore({
     reducer: {
         menu,
-        activeCow
+        activeCow,
+        activePlayer,
+        playingCows,
+        guns
     }
 })

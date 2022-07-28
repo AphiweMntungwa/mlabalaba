@@ -5,9 +5,6 @@ import Middle from "./Middle";
 import "../css/top.scss";
 import Cow from "../Utils/circles/Cows";
 
-const a = new Cow(20, 30, 3, "blue", "black", true);
-console.log(a);
-
 export function spitPathBounds(m, val, v, h) {
   if (h) {
     return `m${m} ${val} h${h}`;

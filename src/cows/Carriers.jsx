@@ -6,7 +6,7 @@ export function RedCarriers() {
   const [reds, setReds] = useState(redCows);
 
   return (
-    <div>
+    <div className="carrier-group">
       Red Cows
       <Barn cowState={reds} />
     </div>
@@ -17,7 +17,7 @@ export function BlackCarriers() {
   const [blacks, setBlacks] = useState(blackCows);
 
   return (
-    <div>
+    <div className="carrier-group">
       Black Cows
       <Barn cowState={blacks} />
     </div>
