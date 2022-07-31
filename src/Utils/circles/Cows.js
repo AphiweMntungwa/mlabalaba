@@ -32,6 +32,7 @@ class Cow extends Circle { //class for the cow piece of the game that extends th
     getColor() {
         return this.redOrBlack;
     }
+
 }
 
 export const redCows = {

@@ -12,45 +12,54 @@ import {
   togglePlayingBlackCows,
 } from "../Redux/playingCows";
 import { redShoots, blackShoots } from "../Redux/guns";
+import { activateCows } from "../Redux/activeCow";
 
 function Middle() {
   const [arr, pushArr] = useState([]);
   const [points, position] = useState(positionObjects);
   const [cows, setCows] = useState({ ...redCows, ...blackCows });
-  // const [playing, setPlaying] = useState([]);
   const [keys, addKeys] = useState([]);
   const [shots, reload] = useState(guns);
   const [num, addNum] = useState();
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playingCows = useSelector((state) => state.playingCows);
+  const playStage = useSelector((state) => state.playStages);
+  const gunMatch = useSelector((state) => state.guns);
+  const shot = useSelector((state) => state.guns);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    pushArr(makeNum(30));
-  }, []);
-
-  useEffect(() => {
     let arr = keys;
-    arr.splice(num, num + 1);
+    const filled = arr.splice(num, 1);
     addKeys(arr);
   }, [num]);
 
-  function afterPlacingCow() {
+  useEffect(() => {
     shots.forEach((el) => {
       addKeys((state) => [...state, Object.keys(el)]);
     });
+    pushArr(makeNum(30));
+  }, []);
+
+  //function that runs in the useEffect after a piece is placed
+  function afterPlacingCow() {
     let test =
       cows[isActive].redOrBlack === "#4c2b2b"
         ? "playingBlackCows"
         : "playingRedCows";
-    keys.map((element, j) => {
-      if (element.every((val) => playingCows[test].includes(val))) {
-        addNum(j);
+
+    //for loop over the gun match possibilities
+    for (let i = 0; i < keys.length; i++) {
+      if (keys[i].every((val) => playingCows[test].includes(val))) {
+        addNum(i);
+        alert("you won");
         test === "playingBlackCows"
           ? dispatch(blackShoots())
           : dispatch(redShoots());
+        break;
       }
-    });
+    }
   }
 
   useEffect(() => {
@@ -60,13 +69,34 @@ function Middle() {
   }, [cows, playingCows]);
 
   function handlePositionClick(e, el) {
+    if (points[el].isOccupied) {
+      if (shot.shotsRed || shot.shotsBlack) {
+        const killedCow = document.getElementsByClassName(
+          points[el].occupiedBy
+        )[0];
+        killedCow.remove();
+        shot.shotsBlack ? dispatch(blackShoots()) : dispatch(redShoots());
+        let arr = points;
+        arr[el].vacate();
+        position(arr);
+        dispatch(activateCows(false));
+      }
+      return null;
+    }
+
     if (points[el].isOccupied || isActive === false) {
       return null;
     } else {
+      console.log(Object.keys(points));
+      let arr = points;
+      arr[el].occupy(isActive);
+      position(arr);
+
       const { x, y } = points[el];
       const obj = { ...cows };
       obj[isActive].setPosition(x, y);
       obj[isActive].isOnBoard = true;
+
       setCows(obj);
       const actives = document.querySelectorAll(".active");
       actives.forEach((el) => {
@@ -80,11 +110,19 @@ function Middle() {
         dispatch(togglePlayingRedCows(el));
       }
     }
-
-    // setPlaying((state) => {
-    //   return [...state, el];
-    // });
   }
+
+  // function clickCow(e) {
+  //   if()
+  //   if (shot.shotsRed || shot.shotsBlack) {
+  //     if (shot.shotsRed) {
+  //       e.target.remove();
+  //       dispatch(redShoots());
+  //     }
+  //     dispatch(blackShoots());
+  //   }
+  //   return null;
+  // }
 
   return (
     <>

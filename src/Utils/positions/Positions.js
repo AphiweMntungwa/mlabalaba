@@ -1,10 +1,20 @@
 import { Circle } from "../circles/Cows";
 
-class Position extends Circle { //class for game positions and some properties that extends circle
-    constructor(x, y, neighbors, r, stroke, isOccupied = false) {
+//class for game positions and some properties that extends circle
+class Position extends Circle {
+    constructor(x, y, neighbors, r, stroke, isOccupied = false, occupiedBy = '') {
         super(x, y, r, stroke);
         this.isOccupied = isOccupied;
+        this.occupiedBy = occupiedBy
         this.neighbors = neighbors;
+    }
+    occupy(cow) {
+        this.isOccupied = true;
+        this.occupiedBy = cow;
+    }
+    vacate() {
+        this.isOccupied = false;
+        this.occupiedBy = null;
     }
 }
 
