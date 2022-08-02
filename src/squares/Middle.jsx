@@ -112,17 +112,6 @@ function Middle() {
     }
   }
 
-  // function clickCow(e) {
-  //   if()
-  //   if (shot.shotsRed || shot.shotsBlack) {
-  //     if (shot.shotsRed) {
-  //       e.target.remove();
-  //       dispatch(redShoots());
-  //     }
-  //     dispatch(blackShoots());
-  //   }
-  //   return null;
-  // }
 
   return (
     <>
@@ -152,6 +141,7 @@ function Middle() {
             className={el}
             style={{ fill: "white", opacity: "0" }}
             onClick={(e) => handlePositionClick(e, el)}
+            data-testid='positions'
           />
         );
       })}

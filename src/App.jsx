@@ -10,7 +10,7 @@ import "./css/app.scss";
 function App() {
   return (
     <Provider store={store}>
-      <div className="app">
+      <div className="app" data-testid='application'>
         <Header />
         <div className="carrier">
           <Navbar />

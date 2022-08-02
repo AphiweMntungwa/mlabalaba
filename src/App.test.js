@@ -4,7 +4,8 @@ import '@testing-library/jest-dom'
 
 describe("App test", () => {
     it("should render App", () => {
-        const app = screen.queryByRole("heading");
-        expect(app).toBe(null);
+        render( < App / > )
+        const app = screen.getByTestId("application");
+        expect(app).toBeInTheDocument();
     });
 });
