@@ -5,12 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 function Barn({ cowState }) {
   const activePlayer = useSelector((state) => state.activePlayer.activePlayer);
-  const shots = useSelector(state => state.guns)
+  const shots = useSelector((state) => state.guns);
   const dispatch = useDispatch();
-  console.log(shots)
 
   function activateCow(e, el) {
-    console.log(cowState[el].redOrBlack, activePlayer)
     if (cowState[el].redOrBlack != activePlayer) {
       return null;
     }
@@ -22,6 +20,9 @@ function Barn({ cowState }) {
     dispatch(activateCows(el));
   }
 
+  const testid = (el) =>
+    cowState[el].redOrBlack === "red" ? "redcows" : "blackcows";
+
   return (
     <div className="cows">
       {Object.keys(cowState).map((el) => (
@@ -31,6 +32,7 @@ function Barn({ cowState }) {
             backgroundColor: cowState[el].redOrBlack,
           }}
           onClick={(e) => activateCow(e, el)}
+          data-testid={testid(el)}
         ></div>
       ))}
     </div>
