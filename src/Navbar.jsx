@@ -12,7 +12,7 @@ function Navbar() {
   }, [burger]);
 
   return (
-    <nav className={press}>
+    <nav className={press} title='navbar' >
       <div>
         <box-icon name="home"></box-icon> <span>Home</span>
       </div>
