@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleMenu } from "../../Redux/menu";
-import { Path } from "../paths/paths";
+import { Path } from "../../Utils/paths/paths";
 
 function MenuIcon() {
   const [press, switcher] = useState(false);

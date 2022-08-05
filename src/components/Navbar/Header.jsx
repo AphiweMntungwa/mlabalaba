@@ -1,6 +1,6 @@
 import React from "react";
-import MenuIcon from "./Utils/Icons/MenuIcon";
-import "./css/header.scss";
+import MenuIcon from "../Icons/MenuIcon";
+import "../../css/header.scss"
 
 function Header() {
   return (

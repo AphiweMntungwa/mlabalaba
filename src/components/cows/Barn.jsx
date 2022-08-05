@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import "../css/barn.scss";
-import { activateCows } from "../Redux/activeCow";
+import { activateCows } from "../../Redux/activeCow";
 import { useSelector, useDispatch } from "react-redux";
+import "../../css/barn.scss"
+
 
 function Barn({ cowState }) {
   const activePlayer = useSelector((state) => state.activePlayer.activePlayer);

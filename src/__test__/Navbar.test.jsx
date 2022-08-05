@@ -8,16 +8,16 @@ describe("it should toggle the navbar with the menu icon", () => {
     act(() => {
       render(<App />);
     });
-    const navbar = screen.getByTitle("navbar");
-    expect(navbar).toHaveClass("nav-off");
+    const app = screen.getByTitle("application");
+    expect(app).toHaveClass("nav-off");
   });
   it("should show navbar", () => {
     act(() => {
       render(<App />);
     });
     const menu = screen.getByTestId("menu");
-    const navbar = screen.getByTitle("navbar");
+    const app = screen.getByTitle("application");
     fireEvent.click(menu);
-    expect(navbar).toHaveClass("nav-on");
+    expect(app).toHaveClass("nav-on");
   });
 });

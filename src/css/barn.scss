@@ -1,9 +1,11 @@
+@use './partials';
 .cows {
     display: flex;
     flex-wrap: wrap;
     div {
-        width: 20px;
-        height: 20px;
+        // width: 20px;
+        // height: 20px;
+        @include partials.setFrame(1.2em, 1.2em);
         border-radius: 50%;
         background-image: url('../Assets/cow/cow.png');
         background-size: cover;

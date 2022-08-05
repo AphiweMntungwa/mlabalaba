@@ -1,20 +1,19 @@
 import React, { useState, useEffect, Fragment } from "react";
+import Path from "./Path";
+import "../../css/top.scss";
 import { useSelector } from "react-redux";
-import Middle from "./Middle";
-import "../css/top.scss";
 
-function Top() {
-  const [press, switcher] = useState(false);
+function Top({ switcher }) {
   const burger = useSelector((state) => state.menu.menu.payload);
 
   useEffect(() => {
-    burger ? switcher("top-nav-on") : switcher("top-nav-off");
+    burger ? switcher("nav-on") : switcher("nav-off");
   }, [burger]);
 
   return (
-    <div className={`${press} top`}>
+    <div className="top">
       <svg viewBox="0 0 140 140" className="board">
-        <Middle />
+        <Path />
       </svg>
     </div>
   );

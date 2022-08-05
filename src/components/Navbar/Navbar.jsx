@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "boxicons";
-import "./css/navbar.scss";
+import "../../css/navbar.scss";
 
 function Navbar() {
-  const [press, switcher] = useState('');
-  const burger = useSelector((state) => state.menu.menu.payload);
-
-  useEffect(() => {
-    burger ? switcher("nav-on") : switcher("nav-off");
-  }, [burger]);
-
   return (
-    <nav className={press} title='navbar' >
+    <nav title="navbar">
       <div>
         <box-icon name="home"></box-icon> <span>Home</span>
       </div>

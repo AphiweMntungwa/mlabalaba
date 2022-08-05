@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
-import Top from "./squares/Top";
-import Navbar from "./Navbar";
-import Header from "./Header";
-import { RedCarriers, BlackCarriers } from "./cows/Carriers";
+import Top from "./components/squares/Top";
+import Navbar from "./components/Navbar/Navbar";
+import Header from "./components/Navbar/Header";
+import { RedCarriers, BlackCarriers } from "./components/cows/Carriers";
+import Stages from "./components/Infobar/Stages";
 import "./css/app.scss";
 
 function App() {
+  const [press, switcher] = useState(false);
+
   return (
     <Provider store={store}>
-      <div className="app" data-testid="application">
+      <div className={`app ${press}`} title="application">
         <Header />
-        <div className="carrier">
-          <Navbar />
-          <Top />
-        </div>
-        <div className="cow-carriers">
-          <RedCarriers />
-          <BlackCarriers />
+        <Navbar />
+        <div className="fold-body">
+          <div className="carrier">
+            <Top switcher={switcher} />
+          </div>
+          <div className="cow-carriers">
+            <Stages />
+            <RedCarriers />
+            <BlackCarriers />
+          </div>
         </div>
       </div>
     </Provider>

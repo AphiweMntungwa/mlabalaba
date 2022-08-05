@@ -1,7 +1,7 @@
     @use "./partials";
     .app {
         .top {
-            padding-inline: 10%;
+            // padding-inline: 10%;
             padding-top: 2vh;
             flex-grow: 1;
             @include partials.flex(row, center, center);
@@ -12,9 +12,6 @@
                     @include partials.setFrame(100px, 100px);
                 }
             }
-        }
-        .top-nav-on {
-            display: none;
         }
         .board {
             width: 100%;

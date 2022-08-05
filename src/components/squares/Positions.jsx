@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { positionObjects } from "../Utils/positions/Positions";
+import { positionObjects } from "../../Utils/positions/Positions";
 import { useSelector, useDispatch } from "react-redux";
-import { activateCows } from "../Redux/activeCow";
-import { redShoots, blackShoots } from "../Redux/guns";
-import { activatePlayer } from "../Redux/activePlayer";
-import { togglePlayingBlackCows, togglePlayingRedCows } from "../Redux/playingCows";
-import "../css/bottom.scss";
+import { activateCows } from "../../Redux/activeCow";
+import { redShoots, blackShoots } from "../../Redux/guns";
+import { activatePlayer } from "../../Redux/activePlayer";
+import { togglePlayingBlackCows, togglePlayingRedCows } from "../../Redux/playingCows";
+import "../../css/bottom.scss";
 
 function Positions({setCows, cows}) {
   const [points, position] = useState(positionObjects);
+  const playingCows = useSelector((state) => state.playingCows);
   const shot = useSelector((state) => state.guns);
   const isActive = useSelector((state) => state.activeCow.activeCow);
 

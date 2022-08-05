@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Positions from "./Positions";
-import { boardLabels } from "../Utils/positions/boardLabels";
-import { redCows, blackCows } from "../Utils/circles/Cows";
+import { boardLabels } from "../../Utils/positions/boardLabels";
+import { redCows, blackCows } from "../../Utils/circles/Cows";
 import { useSelector, useDispatch } from "react-redux";
-import { guns } from "../Utils/positions/gunPositions";
-import { redShoots, blackShoots } from "../Redux/guns";
-import { paths } from "../Utils/paths/paths";
+import { guns } from "../../Utils/positions/gunPositions";
+import { redShoots, blackShoots } from "../../Redux/guns";
+import { paths } from "../../Utils/paths/paths";
+import { movingStage } from "../../Redux/playStages";
 
-function Middle() {
+function Path() {
   const [cows, setCows] = useState({ ...redCows, ...blackCows });
   const [keys, addKeys] = useState([]);
   const [shots, reload] = useState(guns);
   const [num, addNum] = useState();
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playingCows = useSelector((state) => state.playingCows);
-  const playStage = useSelector((state) => state.playStages);
   const gunMatch = useSelector((state) => state.guns);
 
   const dispatch = useDispatch();
@@ -31,15 +31,14 @@ function Middle() {
     });
   }, []);
 
-  //function that runs in the useEffect after a piece is placed
   function afterPlacingCow() {
+    //function that runs in the useEffect after a piece is placed
     let test =
       cows[isActive].redOrBlack === "#4c2b2b"
         ? "playingBlackCows"
         : "playingRedCows";
-
-    //for loop over the gun match possibilities
     for (let i = 0; i < keys.length; i++) {
+      //for loop over the gun match possibilities
       if (keys[i].every((val) => playingCows[test].includes(val))) {
         addNum(i);
         alert("you won");
@@ -55,6 +54,7 @@ function Middle() {
     if (isActive) {
       afterPlacingCow();
     }
+    playingCows.playedRounds === 24 && dispatch(movingStage());
   }, [cows, playingCows]);
 
   return (
@@ -93,6 +93,7 @@ function Middle() {
             strokeWidth={paths[el].strokeWidth}
             d={paths[el].getPath()}
             className={paths[el].class}
+            key={el}
           />
         );
       })}
@@ -101,4 +102,4 @@ function Middle() {
   );
 }
 
-export default Middle;
+export default Path;

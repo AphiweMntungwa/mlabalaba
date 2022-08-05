@@ -3,7 +3,6 @@ nav {
     @include partials.flex(column, space-evenly, flex-start);
     display: none;
     @include partials.setFrame(100%, 55vh);
-    // background-color: white;
     div {
         flex-grow: 1;
         @include partials.flex(column, center, center);
@@ -21,10 +20,12 @@ nav {
 }
 
 .nav-on {
-    display: flex;
-    animation: widthSet 0.2s cubic-bezier(0.895, 0.03, 0.685, 0.22);
-    div {
-        animation: show 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+    nav {
+        display: flex;
+        animation: widthSet 0.2s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+        div {
+            animation: show 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+        }
     }
 }
 

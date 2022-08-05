@@ -1,20 +1,40 @@
 @use "./partials";
 .app {
     min-height: 100vh;
-    color: blue;
+    color: partials.$background;
     @include partials.flex(column, flex-start, center);
     .carrier {
         @include partials.flex(row, space-between, flex-start);
-        @include partials.setFrame(100%, fit-content);
+        flex-grow: 2;
+        max-width: 60%;
     }
     .cow-carriers {
-        @include partials.flex(row, space-evenly, center);
-        min-width: 85px;
+        @include partials.flex(column, space-evenly, center);
+        flex-grow: 1;
         div {
             margin: 1.5%;
         }
         .carrier-group {
             min-width: 90px;
         }
+    }
+    .fold-body {
+        width: 100%;
+        @include partials.flex(row, center, center);
+        flex-wrap: wrap;
+    }
+    @media (max-width: 800px) {
+        .carrier {
+            flex-direction: column;
+        }
+        .fold-body {
+            flex-direction: column;
+        }
+    }
+}
+
+.nav-on {
+    .fold-body {
+        display: none;
     }
 }
