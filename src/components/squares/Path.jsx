@@ -37,20 +37,26 @@ function Path() {
       cows[isActive].redOrBlack === "#4c2b2b"
         ? "playingBlackCows"
         : "playingRedCows";
+
     for (let i = 0; i < keys.length; i++) {
       //for loop over the gun match possibilities
-      if (keys[i].every((val) => playingCows[test].includes(val))) {
-        addNum(i);
-        alert("you won");
-        test === "playingBlackCows"
-          ? dispatch(blackShoots())
-          : dispatch(redShoots());
-        break;
+      if (playingCows[test][keys[i][0]]) {
+        if (playingCows[test][keys[i][1]]) {
+          if (playingCows[test][keys[i][2]]) {
+            addNum(i)
+            alert("you won");
+            test === "playingBlackCows"
+              ? dispatch(blackShoots())
+              : dispatch(redShoots());
+            break;
+          }
+        }
       }
     }
   }
 
   useEffect(() => {
+    console.log(playingCows);
     if (isActive) {
       afterPlacingCow();
     }

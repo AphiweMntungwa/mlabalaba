@@ -14,7 +14,7 @@ class Position extends Circle {
     }
     vacate() {
         this.isOccupied = false;
-        this.occupiedBy = null;
+        this.occupiedBy = '';
     }
 }
 
