@@ -11,46 +11,52 @@ import {
   dropRedCow,
 } from "../../Redux/playingCows";
 import "../../css/bottom.scss";
+import { gunShot, movingStage } from "./functions";
 
 function Positions({ setCows, cows }) {
   const [points, position] = useState(positionObjects);
-  const playingCows = useSelector((state) => state.playingCows);
+  const [ele, elele] = useState();
+  //const playingCows = useSelector((state) => state.playingCows);
   const shot = useSelector((state) => state.guns);
   const isActive = useSelector((state) => state.activeCow.activeCow);
-
+  const playStage = useSelector((state) => state.playStages.playStage);
   const dispatch = useDispatch();
 
-  function gunShot(el) {
-    if (shot.shotsRed || shot.shotsBlack) {
-      const killedCow = document.getElementsByClassName(
-        points[el].occupiedBy
-      )[0];
-      killedCow.remove();
-      
-      if (shot.shotsBlack) {
-        dispatch(blackShoots());
-        dispatch(dropRedCow(el));
-      } else {
-        dispatch(redShoots(el));
-        dispatch(dropBlackCow(el));
-      }
-      console.log(playingCows.playingRedCows);
-      let arr = points;
-      arr[el].vacate();
-      position(arr);
-      dispatch(activateCows(false));
-    }
-  }
-
   function handlePositionClick(e, el) {
+    movingStage(
+      el,
+      playStage,
+      points,
+      cows,
+      setCows,
+      activateCows,
+      dispatch,
+      elele
+    );
     if (points[el].isOccupied) {
-      gunShot(el);
+      gunShot(
+        el,
+        points,
+        position,
+        shot,
+        blackShoots,
+        redShoots,
+        dropBlackCow,
+        dropRedCow,
+        activateCows,
+        dispatch
+      );
       return null;
     }
 
     if (points[el].isOccupied || isActive === false) {
       return null;
     } else {
+      if (playStage === "moving") {
+        let arr = points;
+        arr[ele].vacate();
+        position(arr);
+      }
       let arr = points;
       arr[el].occupy(isActive);
       position(arr);

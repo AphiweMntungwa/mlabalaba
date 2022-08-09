@@ -43,7 +43,7 @@ function Path() {
       if (playingCows[test][keys[i][0]]) {
         if (playingCows[test][keys[i][1]]) {
           if (playingCows[test][keys[i][2]]) {
-            addNum(i)
+            addNum(i);
             alert("you won");
             test === "playingBlackCows"
               ? dispatch(blackShoots())
@@ -53,6 +53,7 @@ function Path() {
         }
       }
     }
+    playingCows.playedRounds === 24 && dispatch(movingStage());
   }
 
   useEffect(() => {
@@ -60,7 +61,6 @@ function Path() {
     if (isActive) {
       afterPlacingCow();
     }
-    playingCows.playedRounds === 24 && dispatch(movingStage());
   }, [cows, playingCows]);
 
   return (
