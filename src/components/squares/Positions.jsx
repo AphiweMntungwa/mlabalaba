@@ -11,28 +11,29 @@ import {
   dropRedCow,
 } from "../../Redux/playingCows";
 import "../../css/bottom.scss";
-import { gunShot, movingStage } from "./functions";
+import { gunShot, movingStage, changeArrayState, placeCow } from "./functions";
 
 function Positions({ setCows, cows }) {
   const [points, position] = useState(positionObjects);
   const [ele, elele] = useState();
-  //const playingCows = useSelector((state) => state.playingCows);
+  const [previousActive, setPreviousActive] = useState("");
+  const [second, useSecond] = useState(false);
+  const playingCows = useSelector((state) => state.playingCows);
   const shot = useSelector((state) => state.guns);
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playStage = useSelector((state) => state.playStages.playStage);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log(points);
+  }, [previousActive]);
+
   function handlePositionClick(e, el) {
-    movingStage(
-      el,
-      playStage,
-      points,
-      cows,
-      setCows,
-      activateCows,
-      dispatch,
-      elele
-    );
+
+    if (playStage === "moving") {
+      movingStage(el, playStage, points, cows, setCows, activateCows, dispatch);
+    }
+
     if (points[el].isOccupied) {
       gunShot(
         el,
@@ -43,34 +44,28 @@ function Positions({ setCows, cows }) {
         redShoots,
         dropBlackCow,
         dropRedCow,
-        activateCows,
-        dispatch
+        dispatch,
+        cows,
+        setCows
       );
       return null;
+    }
+
+    if (previousActive) {
+      if (isActive === points[previousActive].occupiedBy) {
+        cows[isActive].redOrBlack === "#4c2b2b"
+          ? dispatch(dropBlackCow(previousActive))
+          : dispatch(dropRedCow(previousActive));
+        changeArrayState(false, previousActive, points, position, isActive);
+      }
     }
 
     if (points[el].isOccupied || isActive === false) {
       return null;
     } else {
-      if (playStage === "moving") {
-        let arr = points;
-        arr[ele].vacate();
-        position(arr);
-      }
-      let arr = points;
-      arr[el].occupy(isActive);
-      position(arr);
+      changeArrayState(true, el, points, position, isActive);
+      placeCow(el, points, cows, setCows, isActive);
 
-      const { x, y } = points[el];
-      const obj = { ...cows };
-      obj[isActive].setPosition(x, y);
-      obj[isActive].isOnBoard = true;
-      setCows(obj);
-
-      const actives = document.querySelectorAll(".active");
-      actives.forEach((el) => {
-        el.classList.contains("active") && el.remove();
-      });
       if (cows[isActive].redOrBlack === "#4c2b2b") {
         dispatch(activatePlayer("red"));
         dispatch(togglePlayingBlackCows(el));
@@ -78,6 +73,12 @@ function Positions({ setCows, cows }) {
         dispatch(activatePlayer("#4c2b2b"));
         dispatch(togglePlayingRedCows(el));
       }
+      setPreviousActive(el);
+
+      const actives = document.querySelectorAll(".active");
+      actives.forEach((el) => {
+        el.classList.contains("active") && el.remove();
+      });
     }
   }
 
