@@ -24,14 +24,9 @@ function Positions({ setCows, cows }) {
   const playStage = useSelector((state) => state.playStages.playStage);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(points);
-  }, [previousActive]);
-
   function handlePositionClick(e, el) {
-
     if (playStage === "moving") {
-      movingStage(el, playStage, points, cows, setCows, activateCows, dispatch);
+      movingStage(el, setPreviousActive, points, cows, setCows, activateCows, dispatch);
     }
 
     if (points[el].isOccupied) {
@@ -50,6 +45,7 @@ function Positions({ setCows, cows }) {
       );
       return null;
     }
+
 
     if (previousActive) {
       if (isActive === points[previousActive].occupiedBy) {

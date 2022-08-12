@@ -1,28 +1,34 @@
 import { activateCows } from "../../Redux/activeCow";
 
 export const gunShot = (el, points, position, shot, blackShoots, redShoots, dropBlackCow, dropRedCow, dispatch, cows, setCows) => {
+    'use strict'
     if (shot.shotsRed || shot.shotsBlack) {
-        const killedCow = document.getElementsByClassName(
-            points[el].occupiedBy
-        )[0];
-        killedCow.remove();
+        const occupiedBy = points[el].occupiedBy
+        const killedCow = document.getElementsByClassName(occupiedBy)[0];
+        const obj = cows;
 
+        function remover() {
+            killedCow.remove();
+            obj[points[el].occupiedBy].isOnBoard = false;
+            setCows(obj);
+            changeArrayState(false, el, points, position)
+            dispatch(activateCows(false))
+        }
         if (shot.shotsBlack) {
-            dispatch(blackShoots());
-            dispatch(dropRedCow(el));
-        } else {
-            dispatch(redShoots(el));
+            if (cows[occupiedBy].redOrBlack === "red") {
+                remover()
+                dispatch(blackShoots());
+                dispatch(dropRedCow(el));
+            }
+        } else if (cows[occupiedBy].redOrBlack === "#4c2b2b") {
+            remover()
+            dispatch(redShoots());
             dispatch(dropBlackCow(el));
         }
-        let obj = cows;
-        obj[points[el].occupiedBy].isOnBoard = false;
-        setCows(obj);
-        changeArrayState(false, el, points, position)
-        dispatch(activateCows(false))
     }
 }
 
-export const movingStage = (el, playStage, points, cows, setCows, activateCows, dispatch) => {
+export const movingStage = (el, setPreviousActive, points, cows, setCows, activateCows, dispatch) => {
     if (points[el].isOccupied) {
         let cow = document.querySelector(".selectedCow")
         cow && cow.classList.remove('selectedCow');
@@ -30,6 +36,7 @@ export const movingStage = (el, playStage, points, cows, setCows, activateCows, 
         selectCow.classList.add('selectedCow');
 
         dispatch(activateCows(points[el].occupiedBy))
+        setPreviousActive(el);
     }
 }
 
