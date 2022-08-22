@@ -5,13 +5,7 @@ export class Guns {
         this[p1] = p1;
         this[p2] = p2;
         this[p3] = p3;
-    }
-
-    testGunPosition(point) {
-        if (point === this.firstP || point === this.secondP || point.thirdP === this.thirdP) {
-            return true
-        }
-        return false;
+        this.gunArr = [p1, p2, p3]
     }
 }
 

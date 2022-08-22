@@ -4,32 +4,23 @@ import { boardLabels } from "../../Utils/positions/boardLabels";
 import { redCows, blackCows } from "../../Utils/circles/Cows";
 import { useSelector, useDispatch } from "react-redux";
 import { guns } from "../../Utils/positions/gunPositions";
-import { redShoots, blackShoots } from "../../Redux/guns";
+import { redShoots, blackShoots, addGun, removeGun } from "../../Redux/guns";
 import { paths } from "../../Utils/paths/paths";
 import { movingStage } from "../../Redux/playStages";
 
 function Path() {
   const [cows, setCows] = useState({ ...redCows, ...blackCows });
-  const [keys, addKeys] = useState([]);
   const [shots, reload] = useState(guns);
-  const [num, addNum] = useState();
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playingCows = useSelector((state) => state.playingCows);
-  const gunMatch = useSelector((state) => state.guns);
+  const filledGuns = useSelector((state) => state.guns.filledGuns);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    let arr = keys;
-    const filled = arr.splice(num, 1);
-    addKeys(arr);
-  }, [num]);
 
   useEffect(() => {
-    shots.forEach((el) => {
-      addKeys((state) => [...state, Object.keys(el)]);
-    });
-  }, []);
+    console.log(filledGuns);
+  }, [filledGuns]);
 
   function afterPlacingCow() {
     //function that runs in the useEffect after a piece is placed
@@ -38,12 +29,16 @@ function Path() {
         ? "playingBlackCows"
         : "playingRedCows";
 
-    for (let i = 0; i < keys.length; i++) {
+    for (let i = 0; i < shots.length; i++) {
       //for loop over the gun match possibilities
-      if (playingCows[test][keys[i][0]]) {
-        if (playingCows[test][keys[i][1]]) {
-          if (playingCows[test][keys[i][2]]) {
-            addNum(i);
+      const gunArr = shots[i].gunArr;
+      if (playingCows[test][gunArr[0]]) {
+        if (playingCows[test][gunArr[1]]) {
+          if (playingCows[test][gunArr[2]]) {
+            let arr = shots;
+            const filled = arr.splice(i, 1);
+            dispatch(addGun(filled[0].gunArr));
+            reload(arr);      
             alert("you won");
             test === "playingBlackCows"
               ? dispatch(blackShoots())
@@ -103,7 +98,7 @@ function Path() {
           />
         );
       })}
-      <Positions setCows={setCows} cows={cows} />
+      <Positions setCows={setCows} cows={cows} shots={shots} reload={reload} />
     </>
   );
 }

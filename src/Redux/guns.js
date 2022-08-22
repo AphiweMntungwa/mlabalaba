@@ -4,7 +4,8 @@ const gunSlice = createSlice({
     name: 'gunShot',
     initialState: {
         shotsRed: false,
-        shotsBlack: false
+        shotsBlack: false,
+        filledGuns: []
     },
     reducers: {
         redShoots: (state) => {
@@ -13,8 +14,14 @@ const gunSlice = createSlice({
         blackShoots: (state) => {
             state.shotsBlack = !state.shotsBlack
         },
+        addGun: (state, { payload }) => {
+            state.filledGuns.push(payload)
+        },
+        removeGun: (state, { payload }) => {
+            state.filledGuns.splice(payload, 1)
+        }
     }
 })
 
-export const { redShoots, blackShoots } = gunSlice.actions
+export const { redShoots, blackShoots, addGun, removeGun } = gunSlice.actions
 export default gunSlice.reducer;

@@ -1,4 +1,6 @@
 import { activateCows } from "../../Redux/activeCow";
+import { activatePlayer } from "../../Redux/activePlayer";
+import { Guns } from "../../Utils/positions/gunPositions";
 
 export const gunShot = (el, points, position, shot, blackShoots, redShoots, dropBlackCow, dropRedCow, dispatch, cows, setCows) => {
     'use strict'
@@ -14,6 +16,7 @@ export const gunShot = (el, points, position, shot, blackShoots, redShoots, drop
             changeArrayState(false, el, points, position)
             dispatch(activateCows(false))
         }
+        //functionality for making sure a user cannot take his own piece after shooting a gun
         if (shot.shotsBlack) {
             if (cows[occupiedBy].redOrBlack === "red") {
                 remover()
@@ -28,8 +31,11 @@ export const gunShot = (el, points, position, shot, blackShoots, redShoots, drop
     }
 }
 
-export const movingStage = (el, setPreviousActive, points, cows, setCows, activateCows, dispatch) => {
+export const movingStage = (el, setPreviousActive, points, cows, activePlayer, activateCows, dispatch) => {
     if (points[el].isOccupied) {
+        if (cows[points[el].occupiedBy].redOrBlack != activePlayer) {
+            return null;
+        }
         let cow = document.querySelector(".selectedCow")
         cow && cow.classList.remove('selectedCow');
         const selectCow = document.getElementsByClassName(points[el].occupiedBy)[0];
@@ -51,4 +57,52 @@ export const placeCow = (el, points, cows, setCows, isActive) => {
     obj[isActive].setPosition(x, y);
     obj[isActive].isOnBoard = true;
     setCows(obj);
+}
+
+export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload) => {
+    for (let i in filledGuns) {
+        const gunArr = filledGuns[i]
+        if (!points[gunArr[0]].isOccupied || !points[gunArr[1]].isOccupied || !points[gunArr[2]].isOccupied) {
+            dispatch(removeGun(i))
+            let arr = shots;
+            arr.push(new Guns(gunArr[0], gunArr[1], gunArr[2]));
+            reload(arr);
+        }
+    }
+    /** fillGun() when a player shoots the gun is removed from the guns array so it won't shoot itself repeatedly so,
+     * to check whether the gun positions are still occupied after the play I have to loop through the guns 
+     * that were previously occupied and run isOccupied method on them and if any of them is not occupied 
+     * I return the gun back to the guns array so that it can be shoot(able) again.
+     */
+}
+
+export const checkOccupied = (playingCows, points, cowType, dispatch) => {
+    let neighbors = {}
+    let confirm = false;
+
+    function getNeighbors(cowType) {
+        let object = {...cowType }
+        for (let i in object) {
+            neighbors = {...neighbors, ...points[i].neighbors }
+        }
+    }
+
+    function confirmNeighbors() {
+        for (let i in neighbors) {
+            if (!points[i].isOccupied) {
+                confirm = true;
+                break;
+            }
+        }
+    }
+    getNeighbors(playingCows)
+    confirmNeighbors()
+    console.log(playingCows, neighbors)
+    if (!confirm) {
+        if (cowType === "playingBlackCows") {
+            dispatch(activatePlayer("red"));
+        } else {
+            dispatch(activatePlayer("#4c2b2b"));
+        }
+    }
 }

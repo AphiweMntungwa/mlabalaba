@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { positionObjects } from "../../Utils/positions/Positions";
 import { useSelector, useDispatch } from "react-redux";
 import { activateCows } from "../../Redux/activeCow";
-import { redShoots, blackShoots } from "../../Redux/guns";
+import { redShoots, blackShoots, removeGun } from "../../Redux/guns";
 import { activatePlayer } from "../../Redux/activePlayer";
 import {
   togglePlayingBlackCows,
@@ -11,22 +11,59 @@ import {
   dropRedCow,
 } from "../../Redux/playingCows";
 import "../../css/bottom.scss";
-import { gunShot, movingStage, changeArrayState, placeCow } from "./functions";
+import {
+  gunShot,
+  movingStage,
+  changeArrayState,
+  placeCow,
+  fillGun,
+  checkOccupied,
+} from "./functions";
 
-function Positions({ setCows, cows }) {
+function Positions({ setCows, cows, shots, reload }) {
   const [points, position] = useState(positionObjects);
-  const [ele, elele] = useState();
+  const activePlayer = useSelector((state) => state.activePlayer.activePlayer);
   const [previousActive, setPreviousActive] = useState("");
-  const [second, useSecond] = useState(false);
   const playingCows = useSelector((state) => state.playingCows);
+  const filledGuns = useSelector((state) => state.guns.filledGuns);
   const shot = useSelector((state) => state.guns);
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playStage = useSelector((state) => state.playStages.playStage);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (filledGuns.length)
+      fillGun(filledGuns, dispatch, points, removeGun, shots, reload);
+  }, [playingCows]);
+
+  useEffect(() => {
+    var cowType;
+    if (isActive) {
+      if (cows[isActive].redOrBlack === "#4c2b2b") cowType = "playingRedCows";
+      else cowType = "playingBlackCows";
+    }
+
+    console.log(isActive)
+    if (playStage === "moving" && isActive)
+      checkOccupied(
+        playingCows[cowType],
+        points,
+        cowType,
+        dispatch
+      );
+  }, [playingCows, points]);
+
   function handlePositionClick(e, el) {
     if (playStage === "moving") {
-      movingStage(el, setPreviousActive, points, cows, setCows, activateCows, dispatch);
+      movingStage(
+        el,
+        setPreviousActive,
+        points,
+        cows,
+        activePlayer,
+        activateCows,
+        dispatch
+      );
     }
 
     if (points[el].isOccupied) {
@@ -46,6 +83,11 @@ function Positions({ setCows, cows }) {
       return null;
     }
 
+    if (playStage === "moving") {
+      if (!points[previousActive].neighbors[el]) {
+        return null;
+      }
+    }
 
     if (previousActive) {
       if (isActive === points[previousActive].occupiedBy) {
@@ -63,6 +105,9 @@ function Positions({ setCows, cows }) {
       placeCow(el, points, cows, setCows, isActive);
 
       if (cows[isActive].redOrBlack === "#4c2b2b") {
+        if(playStage==='moving'){
+          console.log(isActive)
+        }
         dispatch(activatePlayer("red"));
         dispatch(togglePlayingBlackCows(el));
       } else {
