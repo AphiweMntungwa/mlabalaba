@@ -34,6 +34,11 @@ module.exports = {
                 // Compiles Sass to CSS
                 "sass-loader",
             ],
+        }, {
+            test: /\.(gif|mp3|aac|ogg)$/,
+            use: [{
+                loader: 'file-loader',
+            }, ],
         }, ],
     },
 };

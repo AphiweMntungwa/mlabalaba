@@ -59,11 +59,12 @@ export const placeCow = (el, points, cows, setCows, isActive) => {
     setCows(obj);
 }
 
-export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload) => {
+export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload, play) => {
     for (let i in filledGuns) {
         const gunArr = filledGuns[i]
         if (!points[gunArr[0]].isOccupied || !points[gunArr[1]].isOccupied || !points[gunArr[2]].isOccupied) {
             dispatch(removeGun(i))
+            play()
             let arr = shots;
             arr.push(new Guns(gunArr[0], gunArr[1], gunArr[2]));
             reload(arr);
@@ -76,28 +77,27 @@ export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload) 
      */
 }
 
-export const checkOccupied = (playingCows, points, cowType, dispatch) => {
+function getNeighbors(cowType, points) {
     let neighbors = {}
+    let object = {...cowType }
+    for (let i in object) {
+        neighbors = {...neighbors, ...points[i].neighbors }
+    }
+    return neighbors;
+}
+
+function confirmNeighbors(points, neighbors) {
     let confirm = false;
-
-    function getNeighbors(cowType) {
-        let object = {...cowType }
-        for (let i in object) {
-            neighbors = {...neighbors, ...points[i].neighbors }
+    for (let i in neighbors) {
+        if (!points[i].isOccupied) {
+            confirm = true;
+            break;
         }
     }
+    return confirm;
+}
 
-    function confirmNeighbors() {
-        for (let i in neighbors) {
-            if (!points[i].isOccupied) {
-                confirm = true;
-                break;
-            }
-        }
-    }
-    getNeighbors(playingCows)
-    confirmNeighbors()
-    console.log(playingCows, neighbors)
+function useConfirm(confirm, dispatch, cowType) {
     if (!confirm) {
         if (cowType === "playingBlackCows") {
             dispatch(activatePlayer("red"));
@@ -105,4 +105,13 @@ export const checkOccupied = (playingCows, points, cowType, dispatch) => {
             dispatch(activatePlayer("#4c2b2b"));
         }
     }
+}
+
+export const checkOccupied = (playingCows, points, cowType, dispatch) => {
+    let neighbors = {}
+    let confirm = false;
+
+    neighbors = getNeighbors(playingCows, points)
+    confirm = confirmNeighbors(points, neighbors)
+    useConfirm(confirm, dispatch, cowType)
 }

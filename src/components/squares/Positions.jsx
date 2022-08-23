@@ -19,8 +19,10 @@ import {
   fillGun,
   checkOccupied,
 } from "./functions";
+import useSound from 'use-sound';
+import loadGunEffect from '../../Assets/sfx/loadGunEffect.mp3';
 
-function Positions({ setCows, cows, shots, reload }) {
+function Positions({ setCows, cows, shots, reload, gunOccupied, setGunOccupied }) {
   const [points, position] = useState(positionObjects);
   const activePlayer = useSelector((state) => state.activePlayer.activePlayer);
   const [previousActive, setPreviousActive] = useState("");
@@ -29,11 +31,23 @@ function Positions({ setCows, cows, shots, reload }) {
   const shot = useSelector((state) => state.guns);
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playStage = useSelector((state) => state.playStages.playStage);
+  const [play] = useSound(loadGunEffect);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (filledGuns.length)
-      fillGun(filledGuns, dispatch, points, removeGun, shots, reload);
+      fillGun(filledGuns, dispatch, points, removeGun, shots, reload, play);
+
+    var cowType;
+    if (playStage == "moving") {
+      if (gunOccupied) {
+        if ((gunOccupied === "playingRedCows")) cowType = "playingBlackCows";
+        else if ((gunOccupied === "playingBlackCows")) cowType = "playingRedCows";
+        console.log(playingCows[cowType]);
+        checkOccupied(playingCows[cowType], points, cowType, dispatch);
+        setGunOccupied(false)
+      }
+    }
   }, [playingCows]);
 
   useEffect(() => {
@@ -42,15 +56,9 @@ function Positions({ setCows, cows, shots, reload }) {
       if (cows[isActive].redOrBlack === "#4c2b2b") cowType = "playingRedCows";
       else cowType = "playingBlackCows";
     }
-
-    console.log(isActive)
-    if (playStage === "moving" && isActive)
-      checkOccupied(
-        playingCows[cowType],
-        points,
-        cowType,
-        dispatch
-      );
+    if (playStage === "moving" && isActive) {
+      checkOccupied(playingCows[cowType], points, cowType, dispatch);
+    }
   }, [playingCows, points]);
 
   function handlePositionClick(e, el) {
@@ -105,9 +113,6 @@ function Positions({ setCows, cows, shots, reload }) {
       placeCow(el, points, cows, setCows, isActive);
 
       if (cows[isActive].redOrBlack === "#4c2b2b") {
-        if(playStage==='moving'){
-          console.log(isActive)
-        }
         dispatch(activatePlayer("red"));
         dispatch(togglePlayingBlackCows(el));
       } else {

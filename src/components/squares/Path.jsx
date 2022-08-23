@@ -7,20 +7,20 @@ import { guns } from "../../Utils/positions/gunPositions";
 import { redShoots, blackShoots, addGun, removeGun } from "../../Redux/guns";
 import { paths } from "../../Utils/paths/paths";
 import { movingStage } from "../../Redux/playStages";
+import useSound from 'use-sound';
+import shootGunEffect from '../../Assets/sfx/shootGunEffect.mp3';
+  
 
 function Path() {
   const [cows, setCows] = useState({ ...redCows, ...blackCows });
   const [shots, reload] = useState(guns);
+   const [gunOccupied, setGunOccupied] = useState(false);
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playingCows = useSelector((state) => state.playingCows);
   const filledGuns = useSelector((state) => state.guns.filledGuns);
+  const [play] = useSound(shootGunEffect);
 
   const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    console.log(filledGuns);
-  }, [filledGuns]);
 
   function afterPlacingCow() {
     //function that runs in the useEffect after a piece is placed
@@ -38,8 +38,10 @@ function Path() {
             let arr = shots;
             const filled = arr.splice(i, 1);
             dispatch(addGun(filled[0].gunArr));
-            reload(arr);      
+            reload(arr);
+            play()
             alert("you won");
+            setGunOccupied(test);
             test === "playingBlackCows"
               ? dispatch(blackShoots())
               : dispatch(redShoots());
@@ -98,7 +100,14 @@ function Path() {
           />
         );
       })}
-      <Positions setCows={setCows} cows={cows} shots={shots} reload={reload} />
+      <Positions
+        setCows={setCows}
+        cows={cows}
+        shots={shots}
+        reload={reload}
+        gunOccupied={gunOccupied}
+        setGunOccupied={setGunOccupied}
+      />
     </>
   );
 }
