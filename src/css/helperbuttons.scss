@@ -1,0 +1,21 @@
+@use "./partials";
+.helper-buttons {
+    @include partials.setFrame(81%, fit-content);
+    @include partials.flex(row, start, center);
+    button:nth-child(2),
+    button:nth-child(3) {
+        margin-left: 3px;
+    }
+    // button {
+    //     padding: 1%;
+    //     @include partials.flex(row, space-between, center);
+    img {
+        @include partials.setFrame(20px, 17px);
+        margin-left: 7%;
+    }
+    // }
+}
+
+.form-div-carrier {
+    @include partials.flex(column, start, center);
+}

@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { activateCows } from "../../Redux/activeCow";
 import { useSelector, useDispatch } from "react-redux";
-import "../../css/barn.scss"
-
+import "../../css/barn.scss";
 
 function Barn({ cowState }) {
   const activePlayer = useSelector((state) => state.activePlayer.activePlayer);
-  const shots = useSelector((state) => state.guns);
   const dispatch = useDispatch();
 
   function activateCow(e, el) {
@@ -33,6 +31,7 @@ function Barn({ cowState }) {
             backgroundColor: cowState[el].redOrBlack,
           }}
           onClick={(e) => activateCow(e, el)}
+          className={testid(el)}
           data-testid={testid(el)}
         ></div>
       ))}

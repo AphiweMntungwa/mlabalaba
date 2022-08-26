@@ -11,11 +11,12 @@
     .cow-carriers {
         @include partials.flex(column, space-evenly, center);
         flex-grow: 1;
+        min-height: 40vh;
         div {
             margin: 1.5%;
         }
         .carrier-group {
-            min-width: 90px;
+            @include partials.setFrame(81%, fit-content);
         }
     }
     .fold-body {
@@ -26,9 +27,13 @@
     @media (max-width: 800px) {
         .carrier {
             flex-direction: column;
+            max-width: unset;
         }
         .fold-body {
             flex-direction: column;
+        }
+        .cow-carriers {
+            min-width: 80%;
         }
     }
 }

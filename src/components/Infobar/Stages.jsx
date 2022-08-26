@@ -2,9 +2,16 @@ import React from "react";
 import { useSelector } from "react-redux";
 import "../../css/stages.scss";
 
-function Stages() {
-  const playStages = useSelector((state) => state.playStages.playStage);
-  return <div className="stages">{playStages}</div>;
+function Stages({ showValue }) {
+  const text = useSelector((state) => state.infobar.text);
+
+  return (
+    <div className="stages">
+      <marquee behavior="scroll" direction="left" loop="">
+        {text}
+      </marquee>
+    </div>
+  );
 }
 
 export default Stages;

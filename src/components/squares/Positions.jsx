@@ -18,12 +18,23 @@ import {
   placeCow,
   fillGun,
   checkOccupied,
+  checkFlying,
 } from "./functions";
-import useSound from 'use-sound';
-import loadGunEffect from '../../Assets/sfx/loadGunEffect.mp3';
+import { display } from "../../Redux/infobar";
+import useSound from "use-sound";
+import loadGunEffect from "../../Assets/sfx/loadGunEffect.mp3";
 
-function Positions({ setCows, cows, shots, reload, gunOccupied, setGunOccupied }) {
+function Positions({
+  setCows,
+  cows,
+  shots,
+  reload,
+  gunOccupied,
+  setGunOccupied,
+}) {
   const [points, position] = useState(positionObjects);
+  const [flyingRed, setFlyingRed] = useState(false);
+  const [flyingBlack, setFlyingBlack] = useState(false);
   const activePlayer = useSelector((state) => state.activePlayer.activePlayer);
   const [previousActive, setPreviousActive] = useState("");
   const playingCows = useSelector((state) => state.playingCows);
@@ -41,11 +52,18 @@ function Positions({ setCows, cows, shots, reload, gunOccupied, setGunOccupied }
     var cowType;
     if (playStage == "moving") {
       if (gunOccupied) {
-        if ((gunOccupied === "playingRedCows")) cowType = "playingBlackCows";
-        else if ((gunOccupied === "playingBlackCows")) cowType = "playingRedCows";
+        if (gunOccupied === "playingRedCows") cowType = "playingBlackCows";
+        else if (gunOccupied === "playingBlackCows") cowType = "playingRedCows";
         console.log(playingCows[cowType]);
         checkOccupied(playingCows[cowType], points, cowType, dispatch);
-        setGunOccupied(false)
+        setGunOccupied(false);
+        checkFlying(
+          playingCows[cowType],
+          cowType,
+          setFlyingRed,
+          setFlyingBlack,
+          dispatch
+        );
       }
     }
   }, [playingCows]);
@@ -53,11 +71,13 @@ function Positions({ setCows, cows, shots, reload, gunOccupied, setGunOccupied }
   useEffect(() => {
     var cowType;
     if (isActive) {
+      dispatch(display(playStage));
       if (cows[isActive].redOrBlack === "#4c2b2b") cowType = "playingRedCows";
       else cowType = "playingBlackCows";
     }
     if (playStage === "moving" && isActive) {
       checkOccupied(playingCows[cowType], points, cowType, dispatch);
+      checkFlying(playingCows[cowType], cowType, setFlyingRed, setFlyingBlack,dispatch);
     }
   }, [playingCows, points]);
 
@@ -93,7 +113,17 @@ function Positions({ setCows, cows, shots, reload, gunOccupied, setGunOccupied }
 
     if (playStage === "moving") {
       if (!points[previousActive].neighbors[el]) {
-        return null;
+        if (cows[points[previousActive].occupiedBy].redOrBlack === "#4c2b2b") {
+          if (!flyingBlack) {
+            dispatch(display("NOT ALLOWED!!"));
+            return null;
+          }
+        } else {
+          if (!flyingRed) {
+            dispatch(display("NOT ALLOWED!!"));
+            return null;
+          }
+        }
       }
     }
 

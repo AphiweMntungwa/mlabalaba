@@ -2,10 +2,12 @@
 .stages {
     // background-color: partials.$background;
     background: partials.$backgroundGradient;
-    @include partials.setFrame(100%, fit-content);
+    @include partials.setFrame(80%, fit-content);
+    @include partials.flex(row, start, center);
     min-height: 5vh;
     border-radius: 5px;
     padding: 1%;
     color: partials.$text-color;
     border: 3px solid red;
+    font-family: partials.$screen-font-family;
 }

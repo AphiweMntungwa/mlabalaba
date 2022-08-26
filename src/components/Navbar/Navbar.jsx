@@ -1,31 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import Rules from "../Nav Options/Rules";
+import Settings from "../Nav Options/Settings";
 import "boxicons";
 import "../../css/navbar.scss";
 
 function Navbar() {
+  const [navItem, setNavItem] = useState("rules");
+
   return (
-    <nav title="navbar">
-      <div>
-        <box-icon name="home"></box-icon> <span>Home</span>
-      </div>
-      <div>
-        <box-icon type="solid" name="book-content"></box-icon>
-        <span>Rules</span>
-      </div>
-      <div>
-        <box-icon type="solid" name="color"></box-icon>
-        <span>IsiZulu</span>
-      </div>
-      <div>
-        <box-icon type="logo" name="wikipedia"></box-icon>
-        <span>SeSotho</span>
-      </div>
-      <div>
-        <box-icon type="solid" name="joystick-alt"></box-icon>
-        <span>Settings</span>
-      </div>
-    </nav>
+    <div className="nav-wrapper">
+      <nav title="navbar">
+        <div onClick={() => setNavItem("rules")}>
+          <box-icon type="solid" name="book-content"></box-icon>
+          <span>Rules</span>
+        </div>
+        <div onClick={() => setNavItem("settings")}>
+          <box-icon type="solid" name="joystick-alt"></box-icon>
+          <span>Settings</span>
+        </div>
+      </nav>
+      <Rules navItem={navItem} />
+      <Settings navItem={navItem} />
+    </div>
   );
 }
 

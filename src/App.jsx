@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Navbar/Header";
 import { RedCarriers, BlackCarriers } from "./components/cows/Carriers";
 import Stages from "./components/Infobar/Stages";
+import HelperButtons from "./components/HelperNav/HelperButtons";
 import "./css/app.scss";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Stages />
             <RedCarriers />
             <BlackCarriers />
+            <HelperButtons />
           </div>
         </div>
       </div>

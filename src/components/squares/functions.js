@@ -1,5 +1,6 @@
 import { activateCows } from "../../Redux/activeCow";
 import { activatePlayer } from "../../Redux/activePlayer";
+import { display } from "../../Redux/infobar";
 import { Guns } from "../../Utils/positions/gunPositions";
 
 export const gunShot = (el, points, position, shot, blackShoots, redShoots, dropBlackCow, dropRedCow, dispatch, cows, setCows) => {
@@ -64,6 +65,7 @@ export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload, 
         const gunArr = filledGuns[i]
         if (!points[gunArr[0]].isOccupied || !points[gunArr[1]].isOccupied || !points[gunArr[2]].isOccupied) {
             dispatch(removeGun(i))
+            dispatch(display('Gun Loaded!'))
             play()
             let arr = shots;
             arr.push(new Guns(gunArr[0], gunArr[1], gunArr[2]));
@@ -114,4 +116,18 @@ export const checkOccupied = (playingCows, points, cowType, dispatch) => {
     neighbors = getNeighbors(playingCows, points)
     confirm = confirmNeighbors(points, neighbors)
     useConfirm(confirm, dispatch, cowType)
+}
+
+export const checkFlying = (playingCows, cowType, setFlyingRed, setFlyingBlack, dispatch) => {
+    if (Object.keys(playingCows).length > 3) {
+        return null
+    }
+
+    if (cowType === "playingBlackCows") {
+        setFlyingBlack(true)
+        dispatch(display("Black is Flying"))
+    } else {
+        dispatch(display("Red is Flying"))
+        setFlyingRed(true);
+    }
 }

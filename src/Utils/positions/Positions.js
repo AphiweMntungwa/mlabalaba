@@ -29,7 +29,7 @@ export const positionObjects = {
     c2: new Position(50, 50, { b1: 'b1', d2: 'd2', c3: 'c3' }),
     c3: new Position(50, 70, { b3: 'b3', c4: 'c4', c2: 'c2' }),
     c4: new Position(50, 90, { b5: 'b5', d4: 'd4', c3: 'c3' }),
-    d0: new Position(70, 10, { d1: 'd1', a0: 'a0', g6: 'g6' }),
+    d0: new Position(70, 10, { d1: 'd1', a0: 'a0', g0: 'g0' }),
     d1: new Position(70, 30, { d2: 'd2', b1: 'b1', f1: 'f1', d0: 'd0' }),
     d2: new Position(70, 50, { d1: 'd1', c2: 'c2', e2: 'e2' }),
     d4: new Position(70, 90, { d5: 'd5', e4: 'e4', c4: 'c4' }),
