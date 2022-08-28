@@ -32,36 +32,38 @@ class Cow extends Circle { //class for the cow piece of the game that extends th
     getColor() {
         return this.redOrBlack;
     }
-
 }
 
-export const redCows = {
-    r1: new Cow(null, null, 3, '', 'red'),
-    r2: new Cow(null, null, 3, '', 'red'),
-    r3: new Cow(null, null, 3, '', 'red'),
-    r4: new Cow(null, null, 3, '', 'red'),
-    r5: new Cow(null, null, 3, '', 'red'),
-    r6: new Cow(null, null, 3, '', 'red'),
-    r7: new Cow(null, null, 3, '', 'red'),
-    r8: new Cow(null, null, 3, '', 'red'),
-    r9: new Cow(null, null, 3, '', 'red'),
-    r10: new Cow(null, null, 3, '', 'red'),
-    r11: new Cow(null, null, 3, '', 'red'),
-    r12: new Cow(null, null, 3, '', 'red'),
+export const redCows = () => {
+    return {
+        r1: new Cow(null, null, 3, '', 'red'),
+        r2: new Cow(null, null, 3, '', 'red'),
+        r3: new Cow(null, null, 3, '', 'red'),
+        r4: new Cow(null, null, 3, '', 'red'),
+        r5: new Cow(null, null, 3, '', 'red'),
+        r6: new Cow(null, null, 3, '', 'red'),
+        r7: new Cow(null, null, 3, '', 'red'),
+        r8: new Cow(null, null, 3, '', 'red'),
+        r9: new Cow(null, null, 3, '', 'red'),
+        r10: new Cow(null, null, 3, '', 'red'),
+        r11: new Cow(null, null, 3, '', 'red'),
+        r12: new Cow(null, null, 3, '', 'red'),
+    }
 }
-export const blackCows = {
-    b1: new Cow(null, null, 3, '', '#4c2b2b'),
-    b2: new Cow(null, null, 3, '', '#4c2b2b'),
-    b3: new Cow(null, null, 3, '', '#4c2b2b'),
-    b4: new Cow(null, null, 3, '', '#4c2b2b'),
-    b5: new Cow(null, null, 3, '', '#4c2b2b'),
-    b6: new Cow(null, null, 3, '', '#4c2b2b'),
-    b7: new Cow(null, null, 3, '', '#4c2b2b'),
-    b8: new Cow(null, null, 3, '', '#4c2b2b'),
-    b9: new Cow(null, null, 3, '', '#4c2b2b'),
-    b10: new Cow(null, null, 3, '', '#4c2b2b'),
-    b11: new Cow(null, null, 3, '', '#4c2b2b'),
-    b12: new Cow(null, null, 3, '', '#4c2b2b')
+export const blackCows = () => {
+    return {
+        b1: new Cow(null, null, 3, '', '#4c2b2b'),
+        b2: new Cow(null, null, 3, '', '#4c2b2b'),
+        b3: new Cow(null, null, 3, '', '#4c2b2b'),
+        b4: new Cow(null, null, 3, '', '#4c2b2b'),
+        b5: new Cow(null, null, 3, '', '#4c2b2b'),
+        b6: new Cow(null, null, 3, '', '#4c2b2b'),
+        b7: new Cow(null, null, 3, '', '#4c2b2b'),
+        b8: new Cow(null, null, 3, '', '#4c2b2b'),
+        b9: new Cow(null, null, 3, '', '#4c2b2b'),
+        b10: new Cow(null, null, 3, '', '#4c2b2b'),
+        b11: new Cow(null, null, 3, '', '#4c2b2b'),
+        b12: new Cow(null, null, 3, '', '#4c2b2b')
+    }
 }
-
 export default Cow;

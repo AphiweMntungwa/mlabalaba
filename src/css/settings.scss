@@ -1,0 +1,15 @@
+@use './partials';
+.settings {
+    @include partials.setFrame(100%, fit-content);
+    margin-top: 2%;
+    section {
+        @include partials.flex(row, start, center);
+        margin-block: 1%;
+        font-family: partials.$primary-font-family;
+        span,
+        label {
+            cursor: pointer;
+            min-width: 45%;
+        }
+    }
+}

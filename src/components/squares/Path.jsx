@@ -12,15 +12,24 @@ import useSound from "use-sound";
 import shootGunEffect from "../../Assets/sfx/shootGunEffect.mp3";
 
 function Path() {
-  const [cows, setCows] = useState({ ...redCows, ...blackCows });
-  const [shots, reload] = useState(guns);
+  const [cows, setCows] = useState({ ...redCows(), ...blackCows() });
+  const [shots, reload] = useState(guns());
   const [gunOccupied, setGunOccupied] = useState(false);
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playingCows = useSelector((state) => state.playingCows);
   const playStage = useSelector((state) => state.playStages.playStage);
+  const resetGame = useSelector((state) => state.reset.reset);
   const [play] = useSound(shootGunEffect);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (resetGame) {
+      setCows({ ...redCows(), ...blackCows() });
+      reload(guns());
+      setGunOccupied(false);
+    }
+  }, [resetGame]);
 
   function afterPlacingCow() {
     //function that runs in the useEffect after a piece is placed
@@ -50,13 +59,13 @@ function Path() {
         }
       }
     }
-    playingCows.playedRounds === 24 && dispatch(movingStage());
   }
 
   useEffect(() => {
     if (isActive) {
       afterPlacingCow();
     }
+    playingCows.playedRounds === 1 && dispatch(display(playStage));
   }, [cows, playingCows]);
 
   useEffect(() => {

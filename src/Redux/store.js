@@ -6,6 +6,8 @@ import playingCows from "./playingCows";
 import guns from "./guns";
 import playStages from "./playStages"
 import infobar from "./infobar";
+import reset from './reset';
+import cows from "./cows";
 
 export const store = configureStore({
     reducer: {
@@ -15,6 +17,8 @@ export const store = configureStore({
         playingCows,
         guns,
         playStages,
-        infobar
+        infobar,
+        reset,
+        cows
     }
 })

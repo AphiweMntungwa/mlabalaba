@@ -1,0 +1,27 @@
+@use './partials';
+.wrapper {
+    display: flex;
+    width: 40px;
+    height: 20px;
+    background-color: rgba(133, 126, 132, 0.282);
+    border-radius: 10px;
+    padding: .1%;
+    div {
+        height: 100%;
+        width: 50%;
+        background-color: rgb(92, 90, 86);
+        border-radius: 50%;
+        box-sizing: border-box;
+        border: 1px solid rgba(232, 200, 226, 0.943);
+    }
+}
+
+.On {
+    background-color: rgba(38, 49, 130, 0.522);
+    justify-content: end;
+    div {
+        border: 3px solid wheat;
+        box-shadow: 10%;
+        background-color: blue;
+    }
+}

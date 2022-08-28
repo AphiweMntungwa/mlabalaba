@@ -21,9 +21,14 @@ const playingCowsSlice = createSlice({
         },
         dropRedCow: (state, { payload }) => {
             delete state.playingRedCows[payload];
+        },
+        resetPlayingCows: (state) => {
+            state.playingRedCows = {}
+            state.playingBlackCows = {}
+            state.playedRounds = 0
         }
     }
 })
 
-export const { togglePlayingRedCows, togglePlayingBlackCows, dropBlackCow, dropRedCow } = playingCowsSlice.actions
+export const { togglePlayingRedCows, togglePlayingBlackCows, dropBlackCow, dropRedCow, resetPlayingCows } = playingCowsSlice.actions
 export default playingCowsSlice.reducer;

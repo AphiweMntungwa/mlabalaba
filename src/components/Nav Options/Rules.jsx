@@ -1,11 +1,12 @@
 import React from "react";
+import '../../css/rules.scss';
 
 function Rules({ navItem }) {
   const dynamicItemStyle =
     navItem === "rules" ? { display: "block" } : { display: "none" };
 
   return (
-    <section style={dynamicItemStyle}>
+    <section style={dynamicItemStyle} className="rules">
       <h2>Gameplay</h2>
       <p>
         <i>Morabaraba</i> is accessible and easy to learn, and games can be

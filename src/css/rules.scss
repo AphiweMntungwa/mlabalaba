@@ -1,1 +1,4 @@
 @use './partials';
+section.rules {
+    font-family: partials.$primary-font-family;
+}

@@ -23,6 +23,8 @@ import {
 import { display } from "../../Redux/infobar";
 import useSound from "use-sound";
 import loadGunEffect from "../../Assets/sfx/loadGunEffect.mp3";
+import { reset } from "../../Redux/reset";
+import { removeBlackBarnCow, removeRedBarnCow } from "../../Redux/cows";
 
 function Positions({
   setCows,
@@ -32,7 +34,7 @@ function Positions({
   gunOccupied,
   setGunOccupied,
 }) {
-  const [points, position] = useState(positionObjects);
+  const [points, position] = useState(positionObjects());
   const [flyingRed, setFlyingRed] = useState(false);
   const [flyingBlack, setFlyingBlack] = useState(false);
   const activePlayer = useSelector((state) => state.activePlayer.activePlayer);
@@ -42,8 +44,19 @@ function Positions({
   const shot = useSelector((state) => state.guns);
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playStage = useSelector((state) => state.playStages.playStage);
+  const resetGame = useSelector((state) => state.reset.reset);
   const [play] = useSound(loadGunEffect);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (resetGame) {
+      position(positionObjects());
+      setFlyingRed(false);
+      setFlyingBlack(false);
+      setPreviousActive("");
+      dispatch(reset(false));
+    }
+  }, [resetGame]);
 
   useEffect(() => {
     if (filledGuns.length)
@@ -71,13 +84,18 @@ function Positions({
   useEffect(() => {
     var cowType;
     if (isActive) {
-      dispatch(display(playStage));
       if (cows[isActive].redOrBlack === "#4c2b2b") cowType = "playingRedCows";
       else cowType = "playingBlackCows";
     }
     if (playStage === "moving" && isActive) {
       checkOccupied(playingCows[cowType], points, cowType, dispatch);
-      checkFlying(playingCows[cowType], cowType, setFlyingRed, setFlyingBlack,dispatch);
+      checkFlying(
+        playingCows[cowType],
+        cowType,
+        setFlyingRed,
+        setFlyingBlack,
+        dispatch
+      );
     }
   }, [playingCows, points]);
 
@@ -145,16 +163,14 @@ function Positions({
       if (cows[isActive].redOrBlack === "#4c2b2b") {
         dispatch(activatePlayer("red"));
         dispatch(togglePlayingBlackCows(el));
+        dispatch(removeBlackBarnCow(isActive))
       } else {
         dispatch(activatePlayer("#4c2b2b"));
         dispatch(togglePlayingRedCows(el));
+        dispatch(removeRedBarnCow(isActive))
+
       }
       setPreviousActive(el);
-
-      const actives = document.querySelectorAll(".active");
-      actives.forEach((el) => {
-        el.classList.contains("active") && el.remove();
-      });
     }
   }
 
