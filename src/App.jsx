@@ -11,15 +11,16 @@ import "./css/app.scss";
 
 function App() {
   const [press, switcher] = useState(false);
+  const [dark, setDark] = useState('');
 
   return (
     <Provider store={store}>
-      <div className={`app ${press}`} title="application">
+      <div className={`app ${press} ${dark}`} title="application">
         <Header />
         <Navbar />
         <div className="fold-body">
           <div className="carrier">
-            <Top switcher={switcher} />
+            <Top switcher={switcher} setDark={setDark} />
           </div>
           <div className="cow-carriers">
             <Stages />

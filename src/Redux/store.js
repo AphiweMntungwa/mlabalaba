@@ -8,6 +8,7 @@ import playStages from "./playStages"
 import infobar from "./infobar";
 import reset from './reset';
 import cows from "./cows";
+import theme from "./theme";
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
         playStages,
         infobar,
         reset,
-        cows
+        cows,
+        theme
     }
 })

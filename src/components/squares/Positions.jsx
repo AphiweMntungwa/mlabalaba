@@ -129,6 +129,7 @@ function Positions({
       return null;
     }
 
+    console.log(playStage)
     if (playStage === "moving") {
       if (!points[previousActive].neighbors[el]) {
         if (cows[points[previousActive].occupiedBy].redOrBlack === "#4c2b2b") {

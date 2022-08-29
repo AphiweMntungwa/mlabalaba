@@ -9,10 +9,7 @@ export const switchOn = (name) => {
 
 function Switch({ name }) {
   return (
-    <div
-      className={"wrapper " + name}
-      name={name}
-    >
+    <div className={"wrapper " + name} name={name}>
       <div></div>
     </div>
   );

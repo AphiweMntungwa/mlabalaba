@@ -22,6 +22,17 @@ div.nav-wrapper {
     }
 }
 
+.dark {
+    div.nav-wrapper {
+        nav {
+            div {
+                background: rgb(2, 0, 36);
+                background: radial-gradient( circle, rgba(2, 0, 36, 1) 0%, rgba(5, 19, 31, 1) 46%, rgba(5, 16, 32, 1) 100%, rgba(4, 40, 75, 1) 100%, rgba(5, 59, 93, 1) 100%, rgba(0, 212, 255, 1) 100%);
+            }
+        }
+    }
+}
+
 .nav-on {
     .nav-wrapper {
         @include partials.flex(column, start, start);

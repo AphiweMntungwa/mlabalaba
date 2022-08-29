@@ -19,7 +19,7 @@ function Path() {
   const playingCows = useSelector((state) => state.playingCows);
   const playStage = useSelector((state) => state.playStages.playStage);
   const resetGame = useSelector((state) => state.reset.reset);
-  const [play] = useSound(shootGunEffect);
+  const [play] = useSound(shootGunEffect, { volume: 0.2 });
 
   const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ function Path() {
             dispatch(addGun(filled[0].gunArr));
             reload(arr);
             play();
-            dispatch(display("You Shot A Gun"));
+            dispatch(display("Gun shot!! Gun Shot!!!"));
             setGunOccupied(test);
             test === "playingBlackCows"
               ? dispatch(blackShoots())

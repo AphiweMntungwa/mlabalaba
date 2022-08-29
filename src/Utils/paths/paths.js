@@ -5,7 +5,7 @@ export class Path {
         this.v = vert
         this.class = className
         this.stroke = 'black'
-        this.strokeWidth = .6
+        this.strokeWidth = 1
     }
     getPath() {
         if (this.h) {

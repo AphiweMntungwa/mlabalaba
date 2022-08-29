@@ -3,7 +3,7 @@ import Barn from "./Barn";
 import { useSelector, useDispatch } from "react-redux";
 import { redCows, blackCows } from "../../Utils/circles/Cows";
 import { resetBarn } from "../../Redux/cows";
-import { movingStage } from "../../Redux/playStages";
+import { movingStage, placingStage } from "../../Redux/playStages";
 
 export function RedCarriers() {
   const dispatch = useDispatch();
@@ -21,10 +21,12 @@ export function RedCarriers() {
     if (resetGame) {
       setlocalRed(redCows());
     }
-    console.log(localRed);
-
     Object.keys(localRed).length === 0 && dispatch(movingStage());
   }, [reds, resetGame]);
+
+  useEffect(() => {
+    Object.keys(localRed).length !== 0 && dispatch(placingStage());
+  }, [localRed]);
 
   return (
     <div className="carrier-group">
