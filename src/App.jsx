@@ -11,16 +11,30 @@ import "./css/app.scss";
 
 function App() {
   const [press, switcher] = useState(false);
-  const [dark, setDark] = useState('');
+  const [run, runOnce] = useState(true);
+  const [dark, setDark] = useState("");
+  const [musicPlaying, setMusicPlaying] = useState(false);
 
   return (
     <Provider store={store}>
-      <div className={`app ${press} ${dark}`} title="application">
+      <div
+        className={`app ${press} ${dark}`}
+        title="application"
+        onClick={() => {
+          run && setMusicPlaying(true);
+          runOnce(false)
+        }}
+      >
         <Header />
-        <Navbar />
+        <Navbar setMusicPlaying={setMusicPlaying} />
         <div className="fold-body">
           <div className="carrier">
-            <Top switcher={switcher} setDark={setDark} />
+            <Top
+              switcher={switcher}
+              setDark={setDark}
+              musicPlaying={musicPlaying}
+              setMusicPlaying={setMusicPlaying}
+            />
           </div>
           <div className="cow-carriers">
             <Stages />

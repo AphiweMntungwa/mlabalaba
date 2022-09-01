@@ -9,6 +9,7 @@ import infobar from "./infobar";
 import reset from './reset';
 import cows from "./cows";
 import theme from "./theme";
+import sound from "./sound";
 
 export const store = configureStore({
     reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
         infobar,
         reset,
         cows,
-        theme
+        theme,
+        sound
     }
 })

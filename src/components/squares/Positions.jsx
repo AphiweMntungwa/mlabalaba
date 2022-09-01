@@ -45,7 +45,8 @@ function Positions({
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playStage = useSelector((state) => state.playStages.playStage);
   const resetGame = useSelector((state) => state.reset.reset);
-  const [play] = useSound(loadGunEffect);
+  const soundEffects = useSelector((state) => state.sound.sound);
+  const [play] = useSound(loadGunEffect, {volume: 0.2});
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,7 +61,16 @@ function Positions({
 
   useEffect(() => {
     if (filledGuns.length)
-      fillGun(filledGuns, dispatch, points, removeGun, shots, reload, play);
+      fillGun(
+        filledGuns,
+        dispatch,
+        points,
+        removeGun,
+        shots,
+        reload,
+        play,
+        soundEffects
+      );
 
     var cowType;
     if (playStage == "moving") {
@@ -129,7 +139,6 @@ function Positions({
       return null;
     }
 
-    console.log(playStage)
     if (playStage === "moving") {
       if (!points[previousActive].neighbors[el]) {
         if (cows[points[previousActive].occupiedBy].redOrBlack === "#4c2b2b") {
@@ -164,12 +173,11 @@ function Positions({
       if (cows[isActive].redOrBlack === "#4c2b2b") {
         dispatch(activatePlayer("red"));
         dispatch(togglePlayingBlackCows(el));
-        dispatch(removeBlackBarnCow(isActive))
+        dispatch(removeBlackBarnCow(isActive));
       } else {
         dispatch(activatePlayer("#4c2b2b"));
         dispatch(togglePlayingRedCows(el));
-        dispatch(removeRedBarnCow(isActive))
-
+        dispatch(removeRedBarnCow(isActive));
       }
       setPreviousActive(el);
     }

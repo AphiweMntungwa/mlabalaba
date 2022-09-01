@@ -1,15 +1,42 @@
 @use "./partials";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 .app {
     .top {
         padding-top: 2vh;
         flex-grow: 1;
-        @include partials.flex(row, center, center);
+        @include partials.flex(row,
+        center,
+        center);
         flex-wrap: wrap;
         div {
-            @include partials.setFrame(200px, 200px);
+            @include partials.setFrame(200px,
+            200px);
             div {
-                @include partials.setFrame(100px, 100px);
+                @include partials.setFrame(100px,
+                100px);
             }
+        }
+        .modal {
+            @include partials.position(absolute,
+            28%,
+            5%);
+            @include partials.setFrame(90%,
+            58%);
+            border-radius: 12px;
+            height: 58%;
+            background-color: #ffffff;
+            animation: invisible .15s;
+            h3 {
+                @include partials.flex(row,
+                space-between,
+                center);
+            }
+            p {
+                font-family: Poppins;
+            }
+        }
+        .invisible {
+            display: none;
         }
     }
     .board {
@@ -21,15 +48,36 @@
 .dark {
     .board {
         path {
-            fill: white;
+            stroke: white;
         }
     }
 }
 
-@media (max-height: 668px) {
+@media (min-width: 1310px) {
+    .app {
+        .modal {
+            p {
+                padding-right: 5%;
+            }
+        }
+    }
+}
+
+@media ( max-height: 668px) {
     .app {
         .board {
             width: 50%;
         }
+    }
+}
+
+@keyframes invisible {
+    from {
+        width: 50%;
+        opacity: 0;
+    }
+    to {
+        width: 90%;
+        opacity: 1;
     }
 }

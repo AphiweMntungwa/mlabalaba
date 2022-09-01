@@ -7,12 +7,10 @@ export const gunShot = (el, points, position, shot, blackShoots, redShoots, drop
     'use strict'
     if (shot.shotsRed || shot.shotsBlack) {
         const occupiedBy = points[el].occupiedBy
-        const killedCow = document.getElementsByClassName(occupiedBy)[0];
         const obj = cows;
 
         function remover() {
-            killedCow.remove();
-            obj[points[el].occupiedBy].isOnBoard = false;
+            delete obj[occupiedBy]
             setCows(obj);
             changeArrayState(false, el, points, position)
             dispatch(activateCows(false))
@@ -53,6 +51,7 @@ export const changeArrayState = (occupyOrVacate, el, points, position, isActive)
     position(arr);
 }
 export const placeCow = (el, points, cows, setCows, isActive) => {
+    console.log(points)
     const { x, y } = points[el];
     const obj = {...cows };
     obj[isActive].setPosition(x, y);
@@ -60,13 +59,13 @@ export const placeCow = (el, points, cows, setCows, isActive) => {
     setCows(obj);
 }
 
-export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload, play) => {
+export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload, play, soundEffects) => {
     for (let i in filledGuns) {
         const gunArr = filledGuns[i]
         if (!points[gunArr[0]].isOccupied || !points[gunArr[1]].isOccupied || !points[gunArr[2]].isOccupied) {
             dispatch(removeGun(i))
             dispatch(display('Gun Loaded!'))
-            play()
+            soundEffects && play()
             let arr = shots;
             arr.push(new Guns(gunArr[0], gunArr[1], gunArr[2]));
             reload(arr);

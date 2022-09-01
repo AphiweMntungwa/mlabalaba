@@ -4,7 +4,7 @@ import Settings from "../Nav Options/Settings";
 import "boxicons";
 import "../../css/navbar.scss";
 
-function Navbar() {
+function Navbar({setMusicPlaying}) {
   const [navItem, setNavItem] = useState("rules");
   const [style, setStyle] = useState({ rules: {}, settings: {} });
 
@@ -42,7 +42,7 @@ function Navbar() {
         </div>
       </nav>
       <Rules navItem={navItem} />
-      <Settings navItem={navItem} />
+      <Settings navItem={navItem} setMusicPlaying={setMusicPlaying} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Positions from "./Positions";
 import { boardLabels } from "../../Utils/positions/boardLabels";
 import { redCows, blackCows } from "../../Utils/circles/Cows";
@@ -6,12 +6,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { guns } from "../../Utils/positions/gunPositions";
 import { redShoots, blackShoots, addGun, removeGun } from "../../Redux/guns";
 import { paths } from "../../Utils/paths/paths";
-import { movingStage } from "../../Redux/playStages";
 import { display } from "../../Redux/infobar";
 import useSound from "use-sound";
 import shootGunEffect from "../../Assets/sfx/shootGunEffect.mp3";
+import Intro from "../../Assets/sfx/Intro.mp3";
 
-function Path() {
+function Path({ musicPlaying, setMusicPlaying }) {
   const [cows, setCows] = useState({ ...redCows(), ...blackCows() });
   const [shots, reload] = useState(guns());
   const [gunOccupied, setGunOccupied] = useState(false);
@@ -19,8 +19,11 @@ function Path() {
   const playingCows = useSelector((state) => state.playingCows);
   const playStage = useSelector((state) => state.playStages.playStage);
   const resetGame = useSelector((state) => state.reset.reset);
+  const soundEffects = useSelector((state) => state.sound.sound);
   const [play] = useSound(shootGunEffect, { volume: 0.2 });
-
+  const musicVolume = useSelector((state) => state.sound.musicVolume);
+  const onMusic = useSelector((state) => state.sound.onMusic);
+  const [playIntro, { stop }] = useSound(Intro, { volume: musicVolume });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,6 +33,15 @@ function Path() {
       setGunOccupied(false);
     }
   }, [resetGame]);
+
+  useEffect(() => {
+    if (!onMusic) stop();
+  }, [onMusic]);
+
+  useMemo(() => {
+    console.log(musicPlaying)
+    if (musicPlaying) playIntro();
+  }, [musicPlaying]);
 
   function afterPlacingCow() {
     //function that runs in the useEffect after a piece is placed
@@ -48,7 +60,7 @@ function Path() {
             const filled = arr.splice(i, 1);
             dispatch(addGun(filled[0].gunArr));
             reload(arr);
-            play();
+            soundEffects && play();
             dispatch(display("Gun shot!! Gun Shot!!!"));
             setGunOccupied(test);
             test === "playingBlackCows"
@@ -60,6 +72,8 @@ function Path() {
       }
     }
   }
+
+  // playIntro();
 
   useEffect(() => {
     if (isActive) {
