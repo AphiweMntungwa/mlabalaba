@@ -17,10 +17,12 @@
             }
         }
         .modal {
+            padding-inline: 2%;
+            box-sizing: border-box;
             @include partials.position(absolute,
             28%,
-            5%);
-            @include partials.setFrame(90%,
+            4%);
+            @include partials.setFrame(92%,
             58%);
             border-radius: 12px;
             height: 58%;
@@ -50,6 +52,9 @@
         path {
             stroke: white;
         }
+    }
+    .modal {
+        color: black;
     }
 }
 

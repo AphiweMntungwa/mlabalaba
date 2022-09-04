@@ -23,11 +23,11 @@ export class Circle { //super class circle
 }
 
 class Cow extends Circle { //class for the cow piece of the game that extends the circle class
-    constructor(x, y, r, stroke, redOrBlack = 'black', isCurrentlyActive = false, isOnBoard = false) {
+    constructor(x, y, r, stroke, redOrBlack = 'black', touched = false, isOnBoard = false) {
         super(x, y, r, stroke);
         this.isOnBoard = isOnBoard;
         this.redOrBlack = redOrBlack;
-        this.isCurrentlyActive = isCurrentlyActive;
+        this.touched = touched;
     }
     getColor() {
         return this.redOrBlack;
@@ -38,7 +38,7 @@ export const redCows = () => {
     return {
         r1: new Cow(null, null, 5, '', 'red'),
         r2: new Cow(null, null, 5, '', 'red'),
-        r5: new Cow(null, null, 5, '', 'red'),
+        r3: new Cow(null, null, 5, '', 'red'),
         r4: new Cow(null, null, 5, '', 'red'),
         r5: new Cow(null, null, 5, '', 'red'),
         r6: new Cow(null, null, 5, '', 'red'),
@@ -54,7 +54,7 @@ export const blackCows = () => {
     return {
         b1: new Cow(null, null, 5, '', '#4c2b2b'),
         b2: new Cow(null, null, 5, '', '#4c2b2b'),
-        b5: new Cow(null, null, 5, '', '#4c2b2b'),
+        b3: new Cow(null, null, 5, '', '#4c2b2b'),
         b4: new Cow(null, null, 5, '', '#4c2b2b'),
         b5: new Cow(null, null, 5, '', '#4c2b2b'),
         b6: new Cow(null, null, 5, '', '#4c2b2b'),

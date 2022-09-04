@@ -32,8 +32,6 @@ function Settings({ navItem, setMusicPlaying }) {
     navItem === "settings" ? { display: "block" } : { display: "none" };
 
   const handleMusic = (e) => {
-    console.log(e.target.value)
-
     if (e.target.value == 0) {
       setMusicVolume(false);
       dispatch(toggleOffMusic());

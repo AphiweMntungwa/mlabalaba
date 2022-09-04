@@ -23,8 +23,11 @@ import {
 import { display } from "../../Redux/infobar";
 import useSound from "use-sound";
 import loadGunEffect from "../../Assets/sfx/loadGunEffect.mp3";
+import trap from "../../Assets/sfx/trap.mp3";
 import { reset } from "../../Redux/reset";
 import { removeBlackBarnCow, removeRedBarnCow } from "../../Redux/cows";
+
+let Touched = false;
 
 function Positions({
   setCows,
@@ -46,7 +49,8 @@ function Positions({
   const playStage = useSelector((state) => state.playStages.playStage);
   const resetGame = useSelector((state) => state.reset.reset);
   const soundEffects = useSelector((state) => state.sound.sound);
-  const [play] = useSound(loadGunEffect, {volume: 0.2});
+  const [play] = useSound(loadGunEffect, { volume: 0.2 });
+  const [playTrap] = useSound(trap, { volume: 0.3 });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -77,8 +81,13 @@ function Positions({
       if (gunOccupied) {
         if (gunOccupied === "playingRedCows") cowType = "playingBlackCows";
         else if (gunOccupied === "playingBlackCows") cowType = "playingRedCows";
-        console.log(playingCows[cowType]);
-        checkOccupied(playingCows[cowType], points, cowType, dispatch);
+        checkOccupied(
+          playingCows[cowType],
+          points,
+          cowType,
+          dispatch,
+          playTrap
+        );
         setGunOccupied(false);
         checkFlying(
           playingCows[cowType],
@@ -98,13 +107,14 @@ function Positions({
       else cowType = "playingBlackCows";
     }
     if (playStage === "moving" && isActive) {
-      checkOccupied(playingCows[cowType], points, cowType, dispatch);
+      checkOccupied(playingCows[cowType], points, cowType, dispatch, playTrap);
       checkFlying(
         playingCows[cowType],
         cowType,
         setFlyingRed,
         setFlyingBlack,
-        dispatch
+        dispatch,
+        playTrap
       );
     }
   }, [playingCows, points]);
@@ -157,6 +167,14 @@ function Positions({
 
     if (previousActive) {
       if (isActive === points[previousActive].occupiedBy) {
+        console.log(Touched);
+        if (playStage === "moving") {
+          if (Touched) {
+            Touched = false;
+            return;
+          }
+        }
+        Touched = true;
         cows[isActive].redOrBlack === "#4c2b2b"
           ? dispatch(dropBlackCow(previousActive))
           : dispatch(dropRedCow(previousActive));

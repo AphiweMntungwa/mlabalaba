@@ -98,23 +98,26 @@ function confirmNeighbors(points, neighbors) {
     return confirm;
 }
 
-function useConfirm(confirm, dispatch, cowType) {
+function useConfirm(confirm, dispatch, cowType, playTrap) {
     if (!confirm) {
         if (cowType === "playingBlackCows") {
             dispatch(activatePlayer("red"));
+            dispatch(display('Black is blocked!!'))
         } else {
             dispatch(activatePlayer("#4c2b2b"));
+            dispatch(display('Red is blocked!!!'))
         }
-    }
+        playTrap()
+    } else dispatch(display('moving'));
 }
 
-export const checkOccupied = (playingCows, points, cowType, dispatch) => {
+export const checkOccupied = (playingCows, points, cowType, dispatch, playTrap) => {
     let neighbors = {}
     let confirm = false;
 
     neighbors = getNeighbors(playingCows, points)
     confirm = confirmNeighbors(points, neighbors)
-    useConfirm(confirm, dispatch, cowType)
+    useConfirm(confirm, dispatch, cowType, playTrap)
 }
 
 export const checkFlying = (playingCows, cowType, setFlyingRed, setFlyingBlack, dispatch) => {

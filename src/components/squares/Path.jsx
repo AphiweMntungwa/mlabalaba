@@ -10,6 +10,10 @@ import { display } from "../../Redux/infobar";
 import useSound from "use-sound";
 import shootGunEffect from "../../Assets/sfx/shootGunEffect.mp3";
 import Intro from "../../Assets/sfx/Intro.mp3";
+import playing from "../../Assets/sfx/playing.mp3";
+import placeCow from "../../Assets/sfx/placeCow.mp3";
+import moveCow from "../../Assets/sfx/moveCow.mp3";
+import flyCow from "../../Assets/sfx/flyCow.mp3";
 
 function Path({ musicPlaying, setMusicPlaying }) {
   const [cows, setCows] = useState({ ...redCows(), ...blackCows() });
@@ -24,6 +28,13 @@ function Path({ musicPlaying, setMusicPlaying }) {
   const musicVolume = useSelector((state) => state.sound.musicVolume);
   const onMusic = useSelector((state) => state.sound.onMusic);
   const [playIntro, { stop }] = useSound(Intro, { volume: musicVolume });
+  const [playingSound, { stop: stopPlaying }] = useSound(playing, {
+    volume: musicVolume,
+  });
+  const [playPlaceCow] = useSound(placeCow, { volume: 0.3 });
+  const [playMoveCow] = useSound(moveCow, { volume: 0.4 });
+  const [playFlyCow] = useSound(flyCow, { volume: 0.3 });
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,11 +46,14 @@ function Path({ musicPlaying, setMusicPlaying }) {
   }, [resetGame]);
 
   useEffect(() => {
-    if (!onMusic) stop();
+    console.log(onMusic);
+    if (!onMusic) {
+      stop();
+      stopPlaying();
+    }
   }, [onMusic]);
 
   useMemo(() => {
-    console.log(musicPlaying)
     if (musicPlaying) playIntro();
   }, [musicPlaying]);
 
@@ -69,17 +83,30 @@ function Path({ musicPlaying, setMusicPlaying }) {
             break;
           }
         }
+      } else {
+        if (soundEffects) {
+          if (playStage === "placing") playPlaceCow();
+          else if (playStage === "moving") {
+            if (Object.keys(playingCows[test]).length > 3) {
+              playMoveCow();
+            } else {
+              playFlyCow();
+            }
+          }
+        }
       }
     }
   }
-
-  // playIntro();
 
   useEffect(() => {
     if (isActive) {
       afterPlacingCow();
     }
-    playingCows.playedRounds === 1 && dispatch(display(playStage));
+    if (playingCows.playedRounds === 1) {
+      stop();
+      playingSound();
+      dispatch(display(playStage));
+    }
   }, [cows, playingCows]);
 
   useEffect(() => {
