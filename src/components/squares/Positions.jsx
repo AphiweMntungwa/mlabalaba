@@ -36,6 +36,7 @@ function Positions({
   reload,
   gunOccupied,
   setGunOccupied,
+  win,
 }) {
   const [points, position] = useState(positionObjects());
   const [flyingRed, setFlyingRed] = useState(false);
@@ -120,6 +121,7 @@ function Positions({
   }, [playingCows, points]);
 
   function handlePositionClick(e, el) {
+    if (win) return;
     if (playStage === "moving") {
       movingStage(
         el,
@@ -167,14 +169,13 @@ function Positions({
 
     if (previousActive) {
       if (isActive === points[previousActive].occupiedBy) {
-        console.log(Touched);
         if (playStage === "moving") {
-          if (Touched) {
-            Touched = false;
+          if (Touched === isActive) {
+            dispatch(display("NOT ALLOWED!!"));
             return;
           }
         }
-        Touched = true;
+        Touched = points[previousActive].occupiedBy;
         cows[isActive].redOrBlack === "#4c2b2b"
           ? dispatch(dropBlackCow(previousActive))
           : dispatch(dropRedCow(previousActive));

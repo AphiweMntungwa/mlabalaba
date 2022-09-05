@@ -1,4 +1,4 @@
-@use './partials';
+@use "./partials";
 .stages {
     // background-color: partials.$background;
     background: partials.$backgroundGradient;
@@ -10,4 +10,9 @@
     color: partials.$text-color;
     border: 3px solid red;
     font-family: partials.$screen-font-family;
+    overflow: hidden;
+}
+
+.infobar {
+    position: relative;
 }

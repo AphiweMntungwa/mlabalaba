@@ -1,24 +1,25 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
-import MovingText from "react-moving-text";
 import "../../css/stages.scss";
 
-function Stages({ showValue }) {
+let Num = 0;
+function Stages() {
   const text = useSelector((state) => state.infobar.text);
+  const [style, setStyle] = useState({});
+
+  useMemo(() => {
+    setInterval(() => {
+      Num += 5;
+      setStyle({ left: `${Num}%` });
+      if (Num >= 100) Num = -50;
+    }, 200);
+  }, []);
 
   return (
     <div className="stages">
-      <MovingText
-        type="animation_type"
-        duration="1000ms"
-        delay="0s"
-        direction="normal"
-        timing="ease"
-        iteration="infinite"
-        fillMode="none"
-      >
+      <div className="infobar" style={style}>
         {text}
-      </MovingText>
+      </div>
     </div>
   );
 }

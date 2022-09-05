@@ -66,9 +66,7 @@ export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload, 
             dispatch(removeGun(i))
             dispatch(display('Gun Loaded!'))
             soundEffects && play()
-            let arr = shots;
-            arr.push(new Guns(gunArr[0], gunArr[1], gunArr[2]));
-            reload(arr);
+            reload(() => [...shots, new Guns(gunArr[0], gunArr[1], gunArr[2])])
         }
     }
     /** fillGun() when a player shoots the gun is removed from the guns array so it won't shoot itself repeatedly so,

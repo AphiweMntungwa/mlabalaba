@@ -18,6 +18,7 @@ import flyCow from "../../Assets/sfx/flyCow.mp3";
 function Path({ musicPlaying, setMusicPlaying }) {
   const [cows, setCows] = useState({ ...redCows(), ...blackCows() });
   const [shots, reload] = useState(guns());
+  const [win, setWin] = useState(false);
   const [gunOccupied, setGunOccupied] = useState(false);
   const isActive = useSelector((state) => state.activeCow.activeCow);
   const playingCows = useSelector((state) => state.playingCows);
@@ -33,20 +34,24 @@ function Path({ musicPlaying, setMusicPlaying }) {
   });
   const [playPlaceCow] = useSound(placeCow, { volume: 0.3 });
   const [playMoveCow] = useSound(moveCow, { volume: 0.4 });
-  const [playFlyCow] = useSound(flyCow, { volume: 0.3 });
+  const [playFlyCow] = useSound(flyCow, { volume: 0.1 });
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(shots);
+  }, [shots]);
 
   useEffect(() => {
     if (resetGame) {
       setCows({ ...redCows(), ...blackCows() });
       reload(guns());
       setGunOccupied(false);
+      setWin(false);
     }
   }, [resetGame]);
 
   useEffect(() => {
-    console.log(onMusic);
     if (!onMusic) {
       stop();
       stopPlaying();
@@ -70,10 +75,9 @@ function Path({ musicPlaying, setMusicPlaying }) {
       if (playingCows[test][gunArr[0]]) {
         if (playingCows[test][gunArr[1]]) {
           if (playingCows[test][gunArr[2]]) {
-            let arr = shots;
-            const filled = arr.splice(i, 1);
-            dispatch(addGun(filled[0].gunArr));
-            reload(arr);
+            const filled = shots[i];
+            dispatch(addGun(filled.gunArr));
+            reload(() => shots.filter((e, j) => j !== i));
             soundEffects && play();
             dispatch(display("Gun shot!! Gun Shot!!!"));
             setGunOccupied(test);
@@ -99,6 +103,16 @@ function Path({ musicPlaying, setMusicPlaying }) {
   }
 
   useEffect(() => {
+    if (playStage === "moving" && playingCows.playedRounds > 2) {
+      if (Object.keys(playingCows.playingBlackCows).length < 3) {
+        setWin(true);
+        dispatch(display("Game Over! Red Wins!!!@#$%"));
+      } else if (Object.keys(playingCows.playingRedCows).length < 3) {
+        setWin(true);
+        dispatch(display("Game Over! Black Wins!!!@#$%"));
+      }
+    }
+
     if (isActive) {
       afterPlacingCow();
     }
@@ -160,6 +174,7 @@ function Path({ musicPlaying, setMusicPlaying }) {
         reload={reload}
         gunOccupied={gunOccupied}
         setGunOccupied={setGunOccupied}
+        win={win}
       />
     </>
   );
