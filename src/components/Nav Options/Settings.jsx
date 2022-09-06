@@ -14,7 +14,6 @@ import {
 import useSound from "use-sound";
 import onSwitch from "../../Assets/sfx/onSwitch.mp3";
 import offSwitch from "../../Assets/sfx/offSwitch.mp3";
-import Intro from "../../Assets/sfx/Intro.mp3";
 
 function Settings({ navItem, setMusicPlaying }) {
   const [darkMode, switchDarkMode] = useState(false);

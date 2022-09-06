@@ -23,14 +23,17 @@ export class Circle { //super class circle
 }
 
 class Cow extends Circle { //class for the cow piece of the game that extends the circle class
-    constructor(x, y, r, stroke, redOrBlack = 'black', touched = false, isOnBoard = false) {
+    constructor(x, y, r, stroke, redOrBlack = 'black', isOnBoard = false) {
         super(x, y, r, stroke);
         this.isOnBoard = isOnBoard;
         this.redOrBlack = redOrBlack;
-        this.touched = touched;
+        this.place = false;
     }
     getColor() {
         return this.redOrBlack;
+    }
+    position(position) {
+        this.place = position;
     }
 }
 

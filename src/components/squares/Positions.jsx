@@ -37,6 +37,7 @@ function Positions({
   gunOccupied,
   setGunOccupied,
   win,
+  playGameOver,
 }) {
   const [points, position] = useState(positionObjects());
   const [flyingRed, setFlyingRed] = useState(false);
@@ -55,6 +56,10 @@ function Positions({
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(filledGuns);
+  }, [filledGuns]);
+
+  useEffect(() => {
     if (resetGame) {
       position(positionObjects());
       setFlyingRed(false);
@@ -65,7 +70,7 @@ function Positions({
   }, [resetGame]);
 
   useEffect(() => {
-    if (filledGuns.length)
+    if (Object.keys(filledGuns).length)
       fillGun(
         filledGuns,
         dispatch,
@@ -121,7 +126,10 @@ function Positions({
   }, [playingCows, points]);
 
   function handlePositionClick(e, el) {
-    if (win) return;
+    if (win) {
+      dispatch(display("Game Over! Reset Game!"));
+      return;
+    }
     if (playStage === "moving") {
       movingStage(
         el,

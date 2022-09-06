@@ -5,7 +5,7 @@ const gunSlice = createSlice({
     initialState: {
         shotsRed: false,
         shotsBlack: false,
-        filledGuns: []
+        filledGuns: {}
     },
     reducers: {
         redShoots: (state) => {
@@ -15,15 +15,15 @@ const gunSlice = createSlice({
             state.shotsBlack = !state.shotsBlack
         },
         addGun: (state, { payload }) => {
-            state.filledGuns.push(payload)
+            state.filledGuns[payload] = payload;
         },
         removeGun: (state, { payload }) => {
-            state.filledGuns.splice(payload, 1)
+            delete state.filledGuns[payload]
         },
         resetAllGuns(state) {
             state.shotsRed = false;
             state.shotsBlack = false;
-            state.filledGuns = [];
+            state.filledGuns = {};
         }
     }
 })

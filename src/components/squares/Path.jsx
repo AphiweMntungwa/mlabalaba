@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, Fragment } from "react";
 import Positions from "./Positions";
 import { boardLabels } from "../../Utils/positions/boardLabels";
 import { redCows, blackCows } from "../../Utils/circles/Cows";
@@ -14,6 +14,7 @@ import playing from "../../Assets/sfx/playing.mp3";
 import placeCow from "../../Assets/sfx/placeCow.mp3";
 import moveCow from "../../Assets/sfx/moveCow.mp3";
 import flyCow from "../../Assets/sfx/flyCow.mp3";
+import gameOver from "../../Assets/sfx/gameOver.mp3";
 
 function Path({ musicPlaying, setMusicPlaying }) {
   const [cows, setCows] = useState({ ...redCows(), ...blackCows() });
@@ -29,10 +30,11 @@ function Path({ musicPlaying, setMusicPlaying }) {
   const musicVolume = useSelector((state) => state.sound.musicVolume);
   const onMusic = useSelector((state) => state.sound.onMusic);
   const [playIntro, { stop }] = useSound(Intro, { volume: musicVolume });
+  const [playGameOver] = useSound(gameOver, { volume: 0.2 });
   const [playingSound, { stop: stopPlaying }] = useSound(playing, {
     volume: musicVolume,
   });
-  const [playPlaceCow] = useSound(placeCow, { volume: 0.3 });
+  const [playPlaceCow] = useSound(placeCow, { volume: 0.1 });
   const [playMoveCow] = useSound(moveCow, { volume: 0.4 });
   const [playFlyCow] = useSound(flyCow, { volume: 0.1 });
 
@@ -69,15 +71,15 @@ function Path({ musicPlaying, setMusicPlaying }) {
         ? "playingBlackCows"
         : "playingRedCows";
 
-    for (let i = 0; i < shots.length; i++) {
+    for (let i in shots) {
       //for loop over the gun match possibilities
-      const gunArr = shots[i].gunArr;
+      let gunArr = shots[i].gunArr;
       if (playingCows[test][gunArr[0]]) {
         if (playingCows[test][gunArr[1]]) {
           if (playingCows[test][gunArr[2]]) {
-            const filled = shots[i];
-            dispatch(addGun(filled.gunArr));
-            reload(() => shots.filter((e, j) => j !== i));
+            dispatch(addGun(i));
+            const { [i]: element, ...rest } = shots;
+            reload(rest);
             soundEffects && play();
             dispatch(display("Gun shot!! Gun Shot!!!"));
             setGunOccupied(test);
@@ -107,9 +109,11 @@ function Path({ musicPlaying, setMusicPlaying }) {
       if (Object.keys(playingCows.playingBlackCows).length < 3) {
         setWin(true);
         dispatch(display("Game Over! Red Wins!!!@#$%"));
+        soundEffects && playGameOver();
       } else if (Object.keys(playingCows.playingRedCows).length < 3) {
         setWin(true);
         dispatch(display("Game Over! Black Wins!!!@#$%"));
+        soundEffects && playGameOver();
       }
     }
 
@@ -129,19 +133,41 @@ function Path({ musicPlaying, setMusicPlaying }) {
 
   return (
     <>
-      {Object.keys(cows).map((el) => {
+      {Object.keys(paths).map((el) => {
         return (
-          <circle
+          <path
+            stroke="black"
+            strokeWidth={paths[el].strokeWidth}
+            d={paths[el].getPath()}
+            className={paths[el].class}
             key={el}
-            cx={cows[el].x}
-            cy={cows[el].y}
-            r={cows[el].radius}
-            stroke={cows[el].stroke}
-            className={el}
-            style={{ fill: cows[el].redOrBlack }}
           />
         );
       })}
+      {Object.keys(cows).map((el) => {
+        return (
+          <Fragment key={el}>
+            <circle
+              cx={cows[el].x}
+              cy={cows[el].y}
+              r={cows[el].radius}
+              stroke={cows[el].stroke}
+              className={el}
+              style={{ fill: cows[el].redOrBlack }}
+            />
+            <text
+              x={cows[el].x}
+              y={cows[el].y}
+              textAnchor="middle"
+              style={{ fontSize: ".4em", fill: "white" }}
+              dy=".3em"
+            >
+              {cows[el].place}
+            </text>
+          </Fragment>
+        );
+      })}
+
       <text>
         {Object.keys(boardLabels).map((el) => {
           return (
@@ -156,17 +182,6 @@ function Path({ musicPlaying, setMusicPlaying }) {
           );
         })}
       </text>
-      {Object.keys(paths).map((el) => {
-        return (
-          <path
-            stroke="black"
-            strokeWidth={paths[el].strokeWidth}
-            d={paths[el].getPath()}
-            className={paths[el].class}
-            key={el}
-          />
-        );
-      })}
       <Positions
         setCows={setCows}
         cows={cows}
@@ -175,6 +190,7 @@ function Path({ musicPlaying, setMusicPlaying }) {
         gunOccupied={gunOccupied}
         setGunOccupied={setGunOccupied}
         win={win}
+        playGameOver={playGameOver}
       />
     </>
   );

@@ -1,7 +1,7 @@
 import { activateCows } from "../../Redux/activeCow";
 import { activatePlayer } from "../../Redux/activePlayer";
 import { display } from "../../Redux/infobar";
-import { Guns } from "../../Utils/positions/gunPositions";
+import { guns } from "../../Utils/positions/gunPositions";
 
 export const gunShot = (el, points, position, shot, blackShoots, redShoots, dropBlackCow, dropRedCow, dispatch, cows, setCows) => {
     'use strict'
@@ -51,22 +51,24 @@ export const changeArrayState = (occupyOrVacate, el, points, position, isActive)
     position(arr);
 }
 export const placeCow = (el, points, cows, setCows, isActive) => {
-    console.log(points)
     const { x, y } = points[el];
     const obj = {...cows };
     obj[isActive].setPosition(x, y);
+    obj[isActive].position(el);
     obj[isActive].isOnBoard = true;
     setCows(obj);
 }
 
 export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload, play, soundEffects) => {
+    let gunObj = guns()
     for (let i in filledGuns) {
-        const gunArr = filledGuns[i]
+        const gunArr = gunObj[filledGuns[i]].gunArr
         if (!points[gunArr[0]].isOccupied || !points[gunArr[1]].isOccupied || !points[gunArr[2]].isOccupied) {
             dispatch(removeGun(i))
             dispatch(display('Gun Loaded!'))
-            soundEffects && play()
-            reload(() => [...shots, new Guns(gunArr[0], gunArr[1], gunArr[2])])
+            soundEffects && play();
+            reload({...shots, ... {
+                    [i]: gunObj[i] } })
         }
     }
     /** fillGun() when a player shoots the gun is removed from the guns array so it won't shoot itself repeatedly so,
