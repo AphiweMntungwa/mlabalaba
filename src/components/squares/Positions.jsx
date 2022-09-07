@@ -56,10 +56,6 @@ function Positions({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(filledGuns);
-  }, [filledGuns]);
-
-  useEffect(() => {
     if (resetGame) {
       position(positionObjects());
       setFlyingRed(false);

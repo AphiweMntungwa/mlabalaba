@@ -67,8 +67,12 @@ export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload, 
             dispatch(removeGun(i))
             dispatch(display('Gun Loaded!'))
             soundEffects && play();
-            reload({...shots, ... {
-                    [i]: gunObj[i] } })
+            reload({
+                ...shots,
+                ... {
+                    [i]: gunObj[i]
+                }
+            })
         }
     }
     /** fillGun() when a player shoots the gun is removed from the guns array so it won't shoot itself repeatedly so,
@@ -131,5 +135,15 @@ export const checkFlying = (playingCows, cowType, setFlyingRed, setFlyingBlack, 
     } else {
         dispatch(display("Red is Flying"))
         setFlyingRed(true);
+    }
+}
+
+export const ls = (a, b, remove) => {
+    if (remove) {
+        localStorage.removeItem(remove)
+    } else if (b) {
+        localStorage.setItem(a, b);
+    } else {
+        return localStorage.getItem(a)
     }
 }

@@ -22,7 +22,7 @@ function App() {
         title="application"
         onClick={() => {
           run && setMusicPlaying(true);
-          runOnce(false)
+          runOnce(false);
         }}
       >
         <Header />

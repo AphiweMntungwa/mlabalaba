@@ -5,7 +5,7 @@ import '@testing-library/jest-dom'
 describe("App test", () => {
     it("should render App", () => {
         render( < App / > )
-        const app = screen.getByTitle("application");
+        const app = screen.getByTitle("mlabalaba");
         expect(app).toBeInTheDocument();
     });
 });

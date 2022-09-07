@@ -37,12 +37,7 @@ function Path({ musicPlaying, setMusicPlaying }) {
   const [playPlaceCow] = useSound(placeCow, { volume: 0.1 });
   const [playMoveCow] = useSound(moveCow, { volume: 0.4 });
   const [playFlyCow] = useSound(flyCow, { volume: 0.1 });
-
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(shots);
-  }, [shots]);
 
   useEffect(() => {
     if (resetGame) {

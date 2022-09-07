@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { ls } from "./functions";
 
 function Modal() {
   const [openModal, toggleModal] = useState(false);
   const [myclass, keepClass] = useState("invisible");
 
-  useMemo(
-    () =>
+  useMemo(() => {
+    if (!ls("visited")) {
       setTimeout(() => {
         toggleModal(true);
-      }, 2000),
-    [10]
-  );
+      }, 2000);
+    }
+  }, [10]);
 
   useEffect(() => {
-    console.log(myclass);
     if (!openModal) keepClass("invisible");
     else keepClass("");
   }, [openModal]);
@@ -22,7 +22,13 @@ function Modal() {
     <div className={"modal " + myclass}>
       <h3>
         <span>Welcome</span>
-        <box-icon name="x" onClick={() => toggleModal(false)}></box-icon>
+        <box-icon
+          name="x"
+          onClick={() => {
+            toggleModal(false);
+            ls("visited", true);
+          }}
+        ></box-icon>
       </h3>
       <p>
         Morabaraba is an ancient board game. It is a traditional African game,
