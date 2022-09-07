@@ -9,7 +9,7 @@
         "deploy": "gh-pages -d build",
         "test": "react-scripts test",
         "start": "webpack-dev-server .",
-        "build": "react-scripts build && cp build/index.html build/404.html"
+        "build": "react-scripts build"
     },
     "keywords": [],
     "author": "",
