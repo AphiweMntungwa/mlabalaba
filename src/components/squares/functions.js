@@ -60,26 +60,25 @@ export const placeCow = (el, points, cows, setCows, isActive) => {
 }
 
 export const fillGun = (filledGuns, dispatch, points, removeGun, shots, reload, play, soundEffects) => {
-    let gunObj = guns()
+    let gunObj = {...shots }
+    let gunsOccupied = (key, i) => points[gunObj[i].gunArr[key]].isOccupied;
     for (let i in filledGuns) {
-        const gunArr = gunObj[filledGuns[i]].gunArr
-        if (!points[gunArr[0]].isOccupied || !points[gunArr[1]].isOccupied || !points[gunArr[2]].isOccupied) {
+        gunObj[i].activate()
+        if (!gunsOccupied(0, i) || !gunsOccupied(1, i) || !gunsOccupied(2, i)) {
             dispatch(removeGun(i))
             dispatch(display('Gun Loaded!'))
             soundEffects && play();
-            reload({
-                ...shots,
-                ... {
-                    [i]: gunObj[i]
-                }
-            })
+        } else {
+            gunObj[i].deactivate()
         }
+
     }
-    /** fillGun() when a player shoots the gun is removed from the guns array so it won't shoot itself repeatedly so,
-     * to check whether the gun positions are still occupied after the play I have to loop through the guns 
-     * that were previously occupied and run isOccupied method on them and if any of them is not occupied 
-     * I return the gun back to the guns array so that it can be shoot(able) again.
-     */
+    reload(gunObj)
+        /** fillGun() when a player shoots the gun is removed from the guns array so it won't shoot itself repeatedly so,
+         * to check whether the gun positions are still occupied after the play I have to loop through the guns 
+         * that were previously occupied and run isOccupied method on them and if any of them is not occupied 
+         * I return the gun back to the guns array so that it can be shoot(able) again.
+         */
 }
 
 function getNeighbors(cowType, points) {

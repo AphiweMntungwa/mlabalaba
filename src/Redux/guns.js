@@ -18,7 +18,9 @@ const gunSlice = createSlice({
             state.filledGuns[payload] = payload;
         },
         removeGun: (state, { payload }) => {
-            delete state.filledGuns[payload]
+            const {
+                [payload]: element, ...rest } = state.filledGuns;
+            state.filledGuns = rest;
         },
         resetAllGuns(state) {
             state.shotsRed = false;

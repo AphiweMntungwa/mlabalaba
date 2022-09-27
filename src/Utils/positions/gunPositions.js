@@ -7,6 +7,13 @@ export class Guns {
         this[p3] = p3;
         this.gunArr = [p1, p2, p3]
         this.name = p1 + p2 + p3;
+        this.permanentArr = [p1, p2, p3]
+    }
+    activate() {
+        this.gunArr = this.permanentArr
+    }
+    deactivate() {
+        this.gunArr = []
     }
 }
 

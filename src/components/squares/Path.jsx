@@ -55,6 +55,11 @@ function Path({ musicPlaying, setMusicPlaying }) {
     }
   }, [onMusic]);
 
+  useEffect(() => {
+    console.log(shots)
+  }, [shots])
+  
+
   useMemo(() => {
     if (musicPlaying) playIntro();
   }, [musicPlaying]);
@@ -73,8 +78,11 @@ function Path({ musicPlaying, setMusicPlaying }) {
         if (playingCows[test][gunArr[1]]) {
           if (playingCows[test][gunArr[2]]) {
             dispatch(addGun(i));
-            const { [i]: element, ...rest } = shots;
-            reload(rest);
+            let obj = {...shots}
+            obj[i].deactivate()
+            reload(obj)
+            //const { [i]:element, ...rest } = shots;
+            //reload(rest);
             soundEffects && play();
             dispatch(display("Gun shot!! Gun Shot!!!"));
             setGunOccupied(test);

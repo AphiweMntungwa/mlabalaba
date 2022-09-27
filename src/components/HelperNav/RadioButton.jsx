@@ -12,7 +12,7 @@ function RadioButton() {
           alignItems: "start",
         }}
       >
-        <Form.Check label="IsiZulu" checked name="version" type="radio" />
+        <Form.Check label="IsiZulu" defaultChecked name="version" type="radio" />
         <Form.Check label="SeSotho" name="version" type="radio" />
       </div>
     </Form>
