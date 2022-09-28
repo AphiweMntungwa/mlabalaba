@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0ea40361.css",
+    "main.js": "/static/js/main.0203a670.js",
+    "static/js/845.8aeae21f.chunk.js": "/static/js/845.8aeae21f.chunk.js",
+    "static/media/Intro.mp3": "/static/media/Intro.9daed563988b45797dc7.mp3",
+    "static/media/playing.mp3": "/static/media/playing.b0958dda7581aac9dd5a.mp3",
+    "static/media/gameOver.mp3": "/static/media/gameOver.404d90d298e07a8cdf4e.mp3",
+    "static/media/shootGunEffect.mp3": "/static/media/shootGunEffect.e0583a1d26d345ea421e.mp3",
+    "static/media/trap.mp3": "/static/media/trap.e347305cf0cecd9ee2ac.mp3",
+    "static/media/loadGunEffect.mp3": "/static/media/loadGunEffect.070ec4b64828cc14ff09.mp3",
+    "static/media/flyCow.mp3": "/static/media/flyCow.fe7a66650a3984492367.mp3",
+    "static/media/onSwitch.mp3": "/static/media/onSwitch.4705586969785d968335.mp3",
+    "static/media/light-cow.png": "/static/media/light-cow.7b3e917a4ba4785a8b98.png",
+    "static/media/moveCow.mp3": "/static/media/moveCow.c0d0ec89cece357365e2.mp3",
+    "static/media/offSwitch.mp3": "/static/media/offSwitch.089273d2bc25df401a6b.mp3",
+    "static/media/placeCow.mp3": "/static/media/placeCow.d04a78ed0a1e10e0f6cd.mp3",
+    "index.html": "/index.html",
+    "main.0ea40361.css.map": "/static/css/main.0ea40361.css.map",
+    "main.0203a670.js.map": "/static/js/main.0203a670.js.map",
+    "845.8aeae21f.chunk.js.map": "/static/js/845.8aeae21f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0ea40361.css",
+    "static/js/main.0203a670.js"
+  ]
+}

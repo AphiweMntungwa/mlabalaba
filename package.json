@@ -6,7 +6,7 @@
     "scripts": {
         "test": "react-scripts test",
         "start": "webpack-dev-server .",
-        "build": "react-scripts build && react-scripts build/index.html build/404.html"
+        "build": "react-scripts build"
     },
     "keywords": [],
     "author": "",
